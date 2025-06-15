@@ -3,16 +3,52 @@
   "WorkspaceRootPath": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\src\\Engine.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:engine\\src\\Engine.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\Renderer\\Renderer.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:engine\\Renderer\\Renderer.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\Readme.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Readme.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\Detailed_Guide.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Detailed_Guide.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\CMakeLists.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:CMakeLists.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\CMakeLists.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:engine\\CMakeLists.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\sandbox\\CMakeLists.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:sandbox\\CMakeLists.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\Utils\\Logger.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:engine\\Utils\\Logger.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\Input\\Input.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:engine\\Input\\Input.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\Utils\\Logger.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:engine\\Utils\\Logger.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\Input\\Input.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:engine\\Input\\Input.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\sandbox\\src\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:sandbox\\src\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\src\\Engine.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:engine\\src\\Engine.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\src\\Window.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -23,40 +59,20 @@
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:engine\\src\\Window.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\src\\Engine.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:engine\\src\\Engine.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\Renderer\\Shader.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:engine\\Renderer\\Shader.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\sandbox\\src\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:sandbox\\src\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\Renderer\\Shader.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:engine\\Renderer\\Shader.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\Input\\Input.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:engine\\Input\\Input.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\src\\Engine.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:engine\\src\\Engine.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\Utils\\Logger.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:engine\\Utils\\Logger.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\Input\\Input.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:engine\\Input\\Input.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\sandbox\\CMakeLists.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:sandbox\\CMakeLists.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\CMakeLists.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:CMakeLists.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\test.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:test.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\Utils\\Logger.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:engine\\Utils\\Logger.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\Renderer\\Renderer.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:engine\\Renderer\\Renderer.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -66,82 +82,134 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "Renderer.cpp",
+              "DocumentMoniker": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\Renderer\\Renderer.cpp",
+              "RelativeDocumentMoniker": "engine\\Renderer\\Renderer.cpp",
+              "ToolTip": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\Renderer\\Renderer.cpp",
+              "RelativeToolTip": "engine\\Renderer\\Renderer.cpp",
+              "ViewState": "AgIAACoAAAAAAAAAAAAQwEgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-06-15T22:13:44.617Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Renderer.h",
+              "DocumentMoniker": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\Renderer\\Renderer.h",
+              "RelativeDocumentMoniker": "engine\\Renderer\\Renderer.h",
+              "ToolTip": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\Renderer\\Renderer.h",
+              "RelativeToolTip": "engine\\Renderer\\Renderer.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-06-15T22:13:53.281Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
               "Title": "Engine.cpp",
               "DocumentMoniker": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\src\\Engine.cpp",
               "RelativeDocumentMoniker": "engine\\src\\Engine.cpp",
               "ToolTip": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\src\\Engine.cpp",
               "RelativeToolTip": "engine\\src\\Engine.cpp",
-              "ViewState": "AgIAABoAAAAAAAAAAAAIwCgAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAACMAAAAAAAAAAAAcwEAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-06-15T17:55:35.258Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Engine.h",
-              "DocumentMoniker": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\src\\Engine.h",
-              "RelativeDocumentMoniker": "engine\\src\\Engine.h",
-              "ToolTip": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\src\\Engine.h",
-              "RelativeToolTip": "engine\\src\\Engine.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-06-15T17:56:05.098Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Window.cpp",
-              "DocumentMoniker": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\src\\Window.cpp",
-              "RelativeDocumentMoniker": "engine\\src\\Window.cpp",
-              "ToolTip": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\src\\Window.cpp",
-              "RelativeToolTip": "engine\\src\\Window.cpp",
-              "ViewState": "AgIAABsAAAAAAAAAAAAAADQAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 15,
+              "Title": "Shader.cpp",
+              "DocumentMoniker": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\Renderer\\Shader.cpp",
+              "RelativeDocumentMoniker": "engine\\Renderer\\Shader.cpp",
+              "ToolTip": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\Renderer\\Shader.cpp",
+              "RelativeToolTip": "engine\\Renderer\\Shader.cpp",
+              "ViewState": "AgIAADIAAAAAAAAAAAAQwFAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-06-15T22:00:54.294Z",
+              "WhenOpened": "2025-06-15T22:11:39.481Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 14,
+              "Title": "Shader.h",
+              "DocumentMoniker": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\Renderer\\Shader.h",
+              "RelativeDocumentMoniker": "engine\\Renderer\\Shader.h",
+              "ToolTip": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\Renderer\\Shader.h",
+              "RelativeToolTip": "engine\\Renderer\\Shader.h",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAQwCAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-06-15T22:11:48.84Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
               "Title": "Window.h",
               "DocumentMoniker": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\src\\Window.h",
               "RelativeDocumentMoniker": "engine\\src\\Window.h",
               "ToolTip": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\src\\Window.h",
               "RelativeToolTip": "engine\\src\\Window.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAcwCAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2025-06-15T22:01:09.711Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 12,
+              "Title": "Window.cpp",
+              "DocumentMoniker": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\src\\Window.cpp",
+              "RelativeDocumentMoniker": "engine\\src\\Window.cpp",
+              "ToolTip": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\src\\Window.cpp",
+              "RelativeToolTip": "engine\\src\\Window.cpp",
+              "ViewState": "AgIAABcAAAAAAAAAAAAcwDQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-06-15T22:00:54.294Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Engine.h",
+              "DocumentMoniker": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\src\\Engine.h",
+              "RelativeDocumentMoniker": "engine\\src\\Engine.h",
+              "ToolTip": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\src\\Engine.h",
+              "RelativeToolTip": "engine\\src\\Engine.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-06-15T17:56:05.098Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
               "Title": "main.cpp",
               "DocumentMoniker": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\sandbox\\src\\main.cpp",
               "RelativeDocumentMoniker": "sandbox\\src\\main.cpp",
               "ToolTip": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\sandbox\\src\\main.cpp",
               "RelativeToolTip": "sandbox\\src\\main.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAASAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-06-15T17:53:39.437Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 9,
               "Title": "Input.h",
               "DocumentMoniker": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\Input\\Input.h",
               "RelativeDocumentMoniker": "engine\\Input\\Input.h",
               "ToolTip": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\Input\\Input.h",
               "RelativeToolTip": "engine\\Input\\Input.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAQAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2025-06-15T21:26:49.933Z",
               "EditorCaption": ""
@@ -154,46 +222,33 @@
               "RelativeDocumentMoniker": "engine\\Utils\\Logger.h",
               "ToolTip": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\Utils\\Logger.h",
               "RelativeToolTip": "engine\\Utils\\Logger.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2025-06-15T20:41:46.011Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 7,
               "Title": "Input.cpp",
               "DocumentMoniker": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\Input\\Input.cpp",
               "RelativeDocumentMoniker": "engine\\Input\\Input.cpp",
               "ToolTip": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\Input\\Input.cpp",
               "RelativeToolTip": "engine\\Input\\Input.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAjAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-06-15T21:26:24.673Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "test.txt",
-              "DocumentMoniker": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\test.txt",
-              "RelativeDocumentMoniker": "test.txt",
-              "ToolTip": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\test.txt",
-              "RelativeToolTip": "test.txt",
-              "ViewState": "AgIAAL4AAAAAAAAAAAAiwMwAAAAZAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2025-06-15T20:47:28.229Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 6,
               "Title": "Logger.cpp",
               "DocumentMoniker": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\Utils\\Logger.cpp",
               "RelativeDocumentMoniker": "engine\\Utils\\Logger.cpp",
               "ToolTip": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\Utils\\Logger.cpp",
               "RelativeToolTip": "engine\\Utils\\Logger.cpp",
-              "ViewState": "AgIAACQAAAAAAAAAAAAcwEAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAACMAAAAAAAAAAAAkwEAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-06-15T20:41:17.191Z",
               "EditorCaption": ""
@@ -202,7 +257,7 @@
         },
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -210,7 +265,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 5,
               "Title": "CMakeLists.txt",
               "DocumentMoniker": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\sandbox\\CMakeLists.txt",
               "RelativeDocumentMoniker": "sandbox\\CMakeLists.txt",
@@ -223,15 +278,28 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "CMakeLists.txt",
               "DocumentMoniker": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\CMakeLists.txt",
               "RelativeDocumentMoniker": "engine\\CMakeLists.txt",
               "ToolTip": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\CMakeLists.txt",
               "RelativeToolTip": "engine\\CMakeLists.txt",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
               "WhenOpened": "2025-06-15T17:51:05.556Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "CMakeLists.txt",
+              "DocumentMoniker": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\CMakeLists.txt",
+              "RelativeDocumentMoniker": "CMakeLists.txt",
+              "ToolTip": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\CMakeLists.txt",
+              "RelativeToolTip": "CMakeLists.txt",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
+              "WhenOpened": "2025-06-15T17:48:47.671Z",
               "EditorCaption": ""
             },
             {
@@ -242,22 +310,22 @@
               "RelativeDocumentMoniker": "Readme.md",
               "ToolTip": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\Readme.md",
               "RelativeToolTip": "Readme.md",
-              "ViewState": "AgIAAHkAAAAAAAAAAAAYwJUAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAEcAAAAAAAAAAAAAwJQAAAADAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
-              "WhenOpened": "2025-06-15T21:46:29.556Z",
+              "WhenOpened": "2025-06-15T22:43:49.673Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "CMakeLists.txt",
-              "DocumentMoniker": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\CMakeLists.txt",
-              "RelativeDocumentMoniker": "CMakeLists.txt",
-              "ToolTip": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\CMakeLists.txt",
-              "RelativeToolTip": "CMakeLists.txt",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAeAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2025-06-15T17:48:47.671Z",
+              "DocumentIndex": 2,
+              "Title": "Detailed_Guide.md",
+              "DocumentMoniker": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\Detailed_Guide.md",
+              "RelativeDocumentMoniker": "Detailed_Guide.md",
+              "ToolTip": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\Detailed_Guide.md",
+              "RelativeToolTip": "Detailed_Guide.md",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAABsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2025-06-15T22:44:20.118Z",
               "EditorCaption": ""
             }
           ]

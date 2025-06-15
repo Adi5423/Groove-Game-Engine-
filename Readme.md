@@ -27,13 +27,15 @@ Groove/
 
 ## ✅ Features So Far
 
-* ✅ Modular engine architecture using CMake
+* ✅ **Modular engine** architecture using CMake
 * ✅ Visual Studio 2022 support (multi-config builds)
-* ✅ GLFW and GLAD linked via VCPKG
-* ✅ Working OpenGL 4.5 context setup
-* ✅ Logging system (Groove::Logger)
-* ✅ Input system for keyboard and mouse
-* ✅ Window abstraction (`Groove::Window`)
+* ✅ **Modular CMake**: Engine & sandbox projects
+* ✅ **VS2022** support (multi-config)
+* ✅ **VCPKG** for GLFW, GLAD, GLM
+* ✅ **Window**: GLFW wrapper with VSync
+* ✅ **Input**: Keyboard & mouse abstraction
+* ✅ **Logging**: Color‑coded console + file output
+* ✅ **Rendering**: Shader class + test triangle via VAO/VBO
 
 ---
 
@@ -47,7 +49,7 @@ Groove/
 > 🛠️ Packages used:
 >
 > ```
-> vcpkg install glfw3 glad
+> vcpkg install glfw3 glad glm
 > ```
 
 Ensure `VCPKG_ROOT` is set, or pass the toolchain file manually.
@@ -119,16 +121,30 @@ Engine::Shutdown() → Logger shutdown → GLFW cleanup
 
 ---
 
+## 🔁 Execution Flow
+
+```
+Sandbox.exe → Engine::Init() → Logger + Window + GLAD + Input + Renderer
+             ↳ Engine::Run() → clear screen, input checks, draw triangle, swap buffers, poll events
+             ↳ Engine::Shutdown() → cleanup subsystems
+```
+
+
+---
+
 ## 🗓️ Roadmap
 
-* ✅ Logging system
-* ✅ Input handling (keyboard + mouse)
-* ✅ Window abstraction class
-* [ ] ECS architecture
-* [ ] Event system
-* [ ] Shader & rendering abstraction
-* [ ] Scene management
-* [ ] UI layer / ImGui integration (coming up next!)
+## 🗓️ Roadmap
+
+* ✅ Logging
+* ✅ Input handling
+* ✅ Window abstraction
+* 🔲 Shader abstraction
+* 🔲 Triangle rendering
+* 🔲 ECS framework
+* 🔲 Event dispatch system
+* 🔲 Scene & entity management
+* 🔲 UI/ImGui or QT integration
 
 ---
 
@@ -142,8 +158,14 @@ Engine::Shutdown() → Logger shutdown → GLFW cleanup
 
 ## 📜 License
 
-This project is for educational and personal use. A formal open-source license may be added later.
+This project is licensed under the **MIT License**. See `LICENSE.txt`.
 
 ---
+
+## 📌 Contact & Social
+
+* **Email:** [adii54ti23@gmail.com](mailto:adii54ti23@gmail.com)
+* **LinkedIn:** [Aditya Tiwari](https://www.linkedin.com/in/aditya-tiwari-141731329/)
+* **Instagram:** [@adii5423\_](https://www.instagram.com/adii5423_)
 
 Made with ❤️ by Adii

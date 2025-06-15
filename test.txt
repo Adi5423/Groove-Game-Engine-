@@ -1,3 +1,398 @@
+Renderer.cpp
+```
+#include "Renderer.h"
+#include "Shader.h"
+#include "../Utils/Logger.h"
+#include <glad/glad.h>
+
+// Simple triangle vertices
+static float s_TriangleVertices[] = {
+     0.0f,  0.5f, 0.0f,  // Top
+    -0.5f, -0.5f, 0.0f,  // Bottom left
+     0.5f, -0.5f, 0.0f   // Bottom right
+};
+
+// Inline GLSL sources
+static const char* vertexShaderSrc = R"(
+#version 450 core
+layout(location = 0) in vec3 aPos;
+void main() {
+    gl_Position = vec4(aPos, 1.0);
+}
+)";
+
+static const char* fragmentShaderSrc = R"(
+#version 450 core
+out vec4 FragColor;
+void main() {
+    FragColor = vec4(0.9, 0.3, 0.4, 1.0);
+}
+)";
+
+namespace Groove {
+
+    unsigned int Renderer::s_VAO = 0;
+    unsigned int Renderer::s_VBO = 0;
+    Shader* Renderer::s_Shader = nullptr;
+
+    void Renderer::Init() {
+        Logger::Info("Renderer initializing...");
+
+        // Create and bind VAO
+        glGenVertexArrays(1, &s_VAO);
+        glBindVertexArray(s_VAO);
+
+        // Create VBO
+        glGenBuffers(1, &s_VBO);
+        glBindBuffer(GL_ARRAY_BUFFER, s_VBO);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(s_TriangleVertices), s_TriangleVertices, GL_STATIC_DRAW);
+
+        // Enable vertex attribute 0 (position)
+        glEnableVertexAttribArray(0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+
+        // Create shader
+        s_Shader = new Shader(vertexShaderSrc, fragmentShaderSrc);
+        s_Shader->Bind();
+
+        Logger::Info("Renderer initialized.");
+    }
+
+    void Renderer::DrawTriangle() {
+        s_Shader->Bind();
+        glBindVertexArray(s_VAO);
+        glDrawArrays(GL_TRIANGLES, 0, 3);
+    }
+
+    void Renderer::Shutdown() {
+        delete s_Shader;
+        glDeleteVertexArrays(1, &s_VAO);
+        glDeleteBuffers(1, &s_VBO);
+        Logger::Info("Renderer shutdown.");
+    }
+
+}
+```
+
+Renderer.h
+```
+#pragma once
+
+namespace Groove {
+
+    class Renderer {
+    public:
+        // Call once after GL and window init
+        static void Init();
+
+        // Draw a simple test triangle
+        static void DrawTriangle();
+
+        // Call on shutdown if needed
+        static void Shutdown();
+
+    private:
+        static unsigned int s_VAO;
+        static unsigned int s_VBO;
+        static class Shader* s_Shader;
+    };
+
+}
+
+```
+
+Engine.cpp
+```
+// engine/src/Engine.cpp
+
+#include "Engine.h"
+#include "Window.h"               // ← Use the new window class
+#include "../Renderer/Renderer.h"    // Added include for Renderer
+#include "../Utils/Logger.h"
+#include "../Input/Input.h"
+
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
+static Groove::Window* s_Window = nullptr;
+
+void Engine::Init() {
+    Groove::Logger::Init("Groove.log");
+
+    s_Window = new Groove::Window(1280, 720, "Groove Engine");
+
+    // Initialize GLAD
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+        Groove::Logger::Error("Failed to initialize GLAD!");
+        return;
+    }
+
+    Groove::Input::Init(static_cast<GLFWwindow*>(s_Window->GetNativeWindow()));
+
+    Groove::Logger::Info(std::string("OpenGL Version: ") + (const char*)glGetString(GL_VERSION));
+
+    Groove::Renderer::Init(); // Initialize the renderer
+}
+
+void Engine::Run() {
+    Groove::Logger::Info("Entering main loop...");
+
+    GLFWwindow* glfwWin = static_cast<GLFWwindow*>(s_Window->GetNativeWindow());
+
+    while (!glfwWindowShouldClose(glfwWin)) {
+        glClearColor(0.1f, 0.12f, 0.15f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        // TEMP: Input test logging
+        if (Groove::Input::IsKeyPressed(GLFW_KEY_W)) {
+            Groove::Logger::Info("W key pressed");
+        }
+
+        if (Groove::Input::IsMouseButtonPressed(GLFW_MOUSE_BUTTON_LEFT)) {
+            Groove::Logger::Info("Left mouse button pressed");
+        }
+
+        Groove::Renderer::DrawTriangle(); // Draw a triangle each frame
+
+        s_Window->OnUpdate(); // Handles buffer swap and polling
+    }
+}
+
+void Engine::Shutdown() {
+    Groove::Renderer::Shutdown(); // Shutdown the renderer
+
+    delete s_Window;
+    s_Window = nullptr;
+
+    Groove::Logger::Info("Shutdown complete.");
+    Groove::Logger::Shutdown();
+}
+
+```
+
+Shader.cpp
+```
+#include "Shader.h"
+#include <glad/glad.h>
+#include <iostream>
+
+namespace Groove {
+
+    static int GetUniformLocation(uint32_t program, const std::string& name) {
+        int location = glGetUniformLocation(program, name.c_str());
+        if (location == -1)
+            std::cerr << "[Shader] Warning: uniform '" << name << "' doesn't exist!\n";
+        return location;
+    }
+
+    Shader::Shader(const std::string& vertexSrc, const std::string& fragmentSrc) {
+        m_RendererID = CreateShaderProgram(vertexSrc, fragmentSrc);
+    }
+
+    Shader::~Shader() {
+        glDeleteProgram(m_RendererID);
+    }
+
+    uint32_t Shader::CompileShader(uint32_t type, const std::string& source) {
+        uint32_t id = glCreateShader(type);
+        const char* src = source.c_str();
+        glShaderSource(id, 1, &src, nullptr);
+        glCompileShader(id);
+
+        int result;
+        glGetShaderiv(id, GL_COMPILE_STATUS, &result);
+        if (result == GL_FALSE) {
+            int length;
+            glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
+            std::string message(length, ' ');
+            glGetShaderInfoLog(id, length, &length, &message[0]);
+            std::cerr << "[Shader] Failed to compile "
+                << (type == GL_VERTEX_SHADER ? "vertex" : "fragment")
+                << " shader!\n" << message << "\n";
+            glDeleteShader(id);
+            return 0;
+        }
+
+        return id;
+    }
+
+    uint32_t Shader::CreateShaderProgram(const std::string& vertSrc, const std::string& fragSrc) {
+        uint32_t program = glCreateProgram();
+        uint32_t vs = CompileShader(GL_VERTEX_SHADER, vertSrc);
+        uint32_t fs = CompileShader(GL_FRAGMENT_SHADER, fragSrc);
+
+        glAttachShader(program, vs);
+        glAttachShader(program, fs);
+        glLinkProgram(program);
+        glValidateProgram(program);
+
+        glDeleteShader(vs);
+        glDeleteShader(fs);
+        return program;
+    }
+
+    void Shader::Bind() const {
+        glUseProgram(m_RendererID);
+    }
+
+    void Shader::Unbind() const {
+        glUseProgram(0);
+    }
+
+    void Shader::SetUniform1i(const std::string& name, int value) {
+        glUniform1i(GetUniformLocation(m_RendererID, name), value);
+    }
+
+    void Shader::SetUniform1f(const std::string& name, float value) {
+        glUniform1f(GetUniformLocation(m_RendererID, name), value);
+    }
+
+    void Shader::SetUniformMat4f(const std::string& name, const glm::mat4& matrix) {
+        glUniformMatrix4fv(GetUniformLocation(m_RendererID, name), 1, GL_FALSE, &matrix[0][0]);
+    }
+
+}
+```
+
+Shader.h
+```
+#pragma once
+
+#include <string>
+#include <unordered_map>
+#include <glm/glm.hpp> // for future uniform helpers
+
+namespace Groove {
+
+    class Shader {
+    public:
+        // Construct from GLSL source strings
+        Shader(const std::string& vertexSrc, const std::string& fragmentSrc);
+        ~Shader();
+
+        void Bind() const;
+        void Unbind() const;
+
+        // uniform setters (optional, for later)
+        void SetUniform1i(const std::string& name, int value);
+        void SetUniform1f(const std::string& name, float value);
+        void SetUniformMat4f(const std::string& name, const glm::mat4& matrix);
+
+    private:
+        uint32_t CompileShader(uint32_t type, const std::string& source);
+        uint32_t CreateShaderProgram(const std::string& vertSrc, const std::string& fragSrc);
+
+    private:
+        uint32_t m_RendererID;
+        std::unordered_map<std::string, int> m_UniformLocationCache;
+    };
+
+}
+```
+
+Window.h
+```
+// engine/src/Window.h
+#pragma once
+
+#include <string>
+
+struct GLFWwindow;
+
+namespace Groove {
+
+    class Window {
+    public:
+        Window(int width, int height, const std::string& title);
+        ~Window();
+
+        void OnUpdate(); // Poll events + swap buffers
+
+        int GetWidth() const { return m_Width; }
+        int GetHeight() const { return m_Height; }
+
+        void* GetNativeWindow() const { return m_Window; }
+
+    private:
+        void Init(int width, int height, const std::string& title);
+        void Shutdown();
+
+    private:
+        GLFWwindow* m_Window;
+        std::string m_Title;
+        int m_Width, m_Height;
+    };
+
+}
+```
+
+Window.h
+```
+// engine/src/Window.cpp
+#include "Window.h"
+#include "../Utils/Logger.h"
+
+#include <GLFW/glfw3.h>
+
+namespace Groove {
+
+    Window::Window(int width, int height, const std::string& title)
+        : m_Width(width), m_Height(height), m_Title(title) {
+        Init(width, height, title);
+    }
+
+    Window::~Window() {
+        Shutdown();
+    }
+
+    void Window::Init(int width, int height, const std::string& title) {
+        Logger::Info("Creating window: " + title);
+
+        if (!glfwInit()) {
+            Logger::Error("GLFW Initialization Failed!");
+            return;
+        }
+
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+        m_Window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
+        if (!m_Window) {
+            Logger::Error("Failed to create GLFW window!");
+            glfwTerminate();
+            return;
+        }
+
+        glfwMakeContextCurrent(m_Window);
+        glfwSwapInterval(1); // Enable VSync
+    }
+
+    void Window::OnUpdate() {
+        glfwPollEvents();
+        glfwSwapBuffers(m_Window);
+    }
+
+    void Window::Shutdown() {
+        glfwDestroyWindow(m_Window);
+        glfwTerminate();
+        Logger::Info("Window destroyed and GLFW terminated.");
+    }
+
+}
+```
+
+Engine.h
+```
+#pragma once
+
+namespace Engine {
+    void Init();
+    void Run();
+    void Shutdown();
+}
+```
+
 main.cpp
 ```
 #include "Engine.h"
@@ -10,71 +405,25 @@ int main() {
 }
 ```
 
-Logger.cpp
+input.h
 ```
-#include "Logger.h"
-#include <iostream>
-#include <fstream>
-#include <windows.h>
+#pragma once
+
+#include <GLFW/glfw3.h>
 
 namespace Groove {
 
-    static std::ofstream s_LogFile;
-    static bool s_LogToFile = false;
+    class Input {
+    public:
+        static void Init(GLFWwindow* glfwWindow);
 
-    void Logger::Init(const std::string& logFilePath) {
-        if (!logFilePath.empty()) {
-            s_LogFile.open(logFilePath, std::ios::out | std::ios::trunc);
-            s_LogToFile = s_LogFile.is_open();
-        }
-    }
+        static bool IsKeyPressed(int key);
+        static bool IsMouseButtonPressed(int button);
+        static void GetMousePosition(double& x, double& y);
 
-    void Logger::Shutdown() {
-        if (s_LogToFile) {
-            s_LogFile.close();
-        }
-    }
-
-    void Logger::Info(const std::string& message) { Log(message, LogLevel::Info); }
-    void Logger::Warning(const std::string& message) { Log(message, LogLevel::Warning); }
-    void Logger::Error(const std::string& message) { Log(message, LogLevel::Error); }
-    void Logger::Debug(const std::string& message) { Log(message, LogLevel::Debug); }
-
-    void Logger::Log(const std::string& message, LogLevel level) {
-        HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-
-        switch (level) {
-        case LogLevel::Info:
-            SetConsoleTextAttribute(hConsole, 7); // Light gray
-            std::cout << "[INFO] ";
-            break;
-        case LogLevel::Warning:
-            SetConsoleTextAttribute(hConsole, 6); // Yellow
-            std::cout << "[WARNING] ";
-            break;
-        case LogLevel::Error:
-            SetConsoleTextAttribute(hConsole, 12); // Red
-            std::cout << "[ERROR] ";
-            break;
-        case LogLevel::Debug:
-            SetConsoleTextAttribute(hConsole, 9); // Blue
-            std::cout << "[DEBUG] ";
-            break;
-        }
-
-        std::cout << message << std::endl;
-        SetConsoleTextAttribute(hConsole, 7); // Reset
-
-        if (s_LogToFile) {
-            switch (level) {
-            case LogLevel::Info:    s_LogFile << "[INFO] "; break;
-            case LogLevel::Warning: s_LogFile << "[WARNING] "; break;
-            case LogLevel::Error:   s_LogFile << "[ERROR] "; break;
-            case LogLevel::Debug:   s_LogFile << "[DEBUG] "; break;
-            }
-            s_LogFile << message << std::endl;
-        }
-    }
+    private:
+        static GLFWwindow* s_Window;
+    };
 }
 ```
 
@@ -110,107 +459,159 @@ namespace Groove {
 }
 ```
 
-Engine.h
+Input.cpp
 ```
-#pragma once
+#include "Input.h"
 
-namespace Engine {
-    void Init();
-    void Run();
-    void Shutdown();
+namespace Groove {
+
+    GLFWwindow* Input::s_Window = nullptr;
+
+    void Input::Init(GLFWwindow* glfwWindow) {
+        s_Window = glfwWindow;
+    }
+
+    bool Input::IsKeyPressed(int key) {
+        return glfwGetKey(s_Window, key) == GLFW_PRESS;
+    }
+
+    bool Input::IsMouseButtonPressed(int button) {
+        return glfwGetMouseButton(s_Window, button) == GLFW_PRESS;
+    }
+
+    void Input::GetMousePosition(double& x, double& y) {
+        glfwGetCursorPos(s_Window, &x, &y);
+    }
+
 }
 ```
 
-Engine.cpp
+Logger.cpp
 ```
-#include "Engine.h"
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+#include "Logger.h"
 #include <iostream>
+#include <fstream>
+#include <windows.h>
 
-static GLFWwindow* window = nullptr;
+namespace Groove {
 
-void Engine::Init() {
-    std::cout << "Initializing GLFW..." << std::endl;
-    if (!glfwInit()) {
-        std::cerr << "[Error] Failed to initialize GLFW!" << std::endl;
-        return;
+    static std::ofstream s_LogFile;
+    static bool s_LogToFile = false;
+
+    void Logger::Init(const std::string& logFilePath) {
+        if (!logFilePath.empty()) {
+            s_LogFile.open(logFilePath, std::ios::out | std::ios::trunc);
+            s_LogToFile = s_LogFile.is_open();
+        }
     }
 
-    // Set OpenGL version and profile
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-    // Create window
-    window = glfwCreateWindow(1280, 720, "Groove Engine", nullptr, nullptr);
-    if (!window) {
-        std::cerr << "[Error] Failed to create GLFW window!" << std::endl;
-        glfwTerminate();
-        return;
+    void Logger::Shutdown() {
+        if (s_LogToFile) {
+            s_LogFile.close();
+        }
     }
 
-    glfwMakeContextCurrent(window);
+    void Logger::Info(const std::string& message)    { Log(message, LogLevel::Info); }
+    void Logger::Warning(const std::string& message) { Log(message, LogLevel::Warning); }
+    void Logger::Error(const std::string& message)   { Log(message, LogLevel::Error); }
+    void Logger::Debug(const std::string& message)   { Log(message, LogLevel::Debug); }
 
-    // Load OpenGL functions using GLAD
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-        std::cerr << "[Error] Failed to initialize GLAD!" << std::endl;
-        return;
+    void Logger::Log(const std::string& message, LogLevel level) {
+        HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+        switch (level) {
+            case LogLevel::Info:
+                SetConsoleTextAttribute(hConsole, 7); // Light gray
+                std::cout << "[INFO] ";
+                break;
+            case LogLevel::Warning:
+                SetConsoleTextAttribute(hConsole, 6); // Yellow
+                std::cout << "[WARNING] ";
+                break;
+            case LogLevel::Error:
+                SetConsoleTextAttribute(hConsole, 12); // Red
+                std::cout << "[ERROR] ";
+                break;
+            case LogLevel::Debug:
+                SetConsoleTextAttribute(hConsole, 9); // Blue
+                std::cout << "[DEBUG] ";
+                break;
+        }
+
+        std::cout << message << std::endl;
+        SetConsoleTextAttribute(hConsole, 7); // Reset
+
+        if (s_LogToFile) {
+            switch (level) {
+                case LogLevel::Info:    s_LogFile << "[INFO] "; break;
+                case LogLevel::Warning: s_LogFile << "[WARNING] "; break;
+                case LogLevel::Error:   s_LogFile << "[ERROR] "; break;
+                case LogLevel::Debug:   s_LogFile << "[DEBUG] "; break;
+            }
+            s_LogFile << message << std::endl;
+        }
     }
-
-    std::cout << "OpenGL Version: " << glGetString(GL_VERSION) << std::endl;
-}
-
-void Engine::Run() {
-    std::cout << "Entering main loop..." << std::endl;
-    while (!glfwWindowShouldClose(window)) {
-        glClearColor(0.1f, 0.12f, 0.15f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
-
-        glfwSwapBuffers(window);
-        glfwPollEvents();
-    }
-}
-
-void Engine::Shutdown() {
-    glfwDestroyWindow(window);
-    glfwTerminate();
-    std::cout << "Shutdown complete." << std::endl;
 }
 ```
 
-engine/CMakeLists.txt
+sandbox->cmakelists
+```
+add_executable(Sandbox
+    src/main.cpp
+)
+
+target_include_directories(Sandbox
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/../engine/src
+        ${CMAKE_CURRENT_SOURCE_DIR}/../engine/Utils
+)
+
+target_link_libraries(Sandbox
+    PRIVATE
+        Engine
+)
+```
+
+engine->cmakelists
 ```
 add_library(Engine STATIC
     src/Engine.cpp
- "Utils/Logger.cpp" "Utils/Logger.h")
+    src/Window.cpp                 
+    Utils/Logger.cpp
+    Input/Input.cpp Input/Input.h
+    src/Window.h                   # <-- Header (optional)
+    Renderer/Renderer.cpp Renderer/Renderer.h
+    Renderer/Shader.cpp Renderer/Shader.h
+)
 
-target_include_directories(Engine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
-set(CMAKE_TOOLCHAIN_FILE "D:/vcpkg/scripts/buildsystems/vcpkg.cmake")
 
-# Find and link GLFW and GLAD via vcpkg
+target_include_directories(Engine
+    PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}/src
+        ${CMAKE_CURRENT_SOURCE_DIR}/Utils
+        ${CMAKE_CURRENT_SOURCE_DIR}/Input
+        ${CMAKE_CURRENT_SOURCE_DIR}/Renderer
+)
+
 find_package(glfw3 CONFIG REQUIRED)
 find_package(glad CONFIG REQUIRED)
+find_package(glm CONFIG REQUIRED)
 
-
-target_link_libraries(Engine PUBLIC glfw glad::glad)
+target_link_libraries(Engine
+    PUBLIC
+        glfw
+        glad::glad
+        glm::glm
+)
 ```
 
-Groove/CmakeLists.txt(main source)
+root->cmakelists
 ```
 cmake_minimum_required(VERSION 3.21)
 project(Groove)
 
+# toolchain is picked up via CMakePresets.json; do NOT hard‑code here
+
 add_subdirectory(engine)
 add_subdirectory(sandbox)
-```
-
-sandbox/CMakeLists.txt
-```
-add_executable(Sandbox
-    "src/main.cpp"
-)
-
-target_link_libraries(Sandbox PRIVATE Engine)
-target_include_directories(Sandbox PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../engine/src)
 ```

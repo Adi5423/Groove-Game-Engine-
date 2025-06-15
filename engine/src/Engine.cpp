@@ -2,6 +2,7 @@
 
 #include "Engine.h"
 #include "Window.h"               // ← Use the new window class
+#include "../Renderer/Renderer.h"    // Added include for Renderer
 #include "../Utils/Logger.h"
 #include "../Input/Input.h"
 
@@ -24,6 +25,8 @@ void Engine::Init() {
     Groove::Input::Init(static_cast<GLFWwindow*>(s_Window->GetNativeWindow()));
 
     Groove::Logger::Info(std::string("OpenGL Version: ") + (const char*)glGetString(GL_VERSION));
+
+    Groove::Renderer::Init(); // Initialize the renderer
 }
 
 void Engine::Run() {
@@ -44,11 +47,15 @@ void Engine::Run() {
             Groove::Logger::Info("Left mouse button pressed");
         }
 
+        Groove::Renderer::DrawTriangle(); // Draw a triangle each frame
+
         s_Window->OnUpdate(); // Handles buffer swap and polling
     }
 }
 
 void Engine::Shutdown() {
+    Groove::Renderer::Shutdown(); // Shutdown the renderer
+
     delete s_Window;
     s_Window = nullptr;
 
