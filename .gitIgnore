@@ -12,6 +12,7 @@ cmake_install.cmake
 # Ignore Visual Studio cache
 .vscode/
 .vs/
+.vs
 *.user
 *.log
 
