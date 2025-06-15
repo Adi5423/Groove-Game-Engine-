@@ -7,11 +7,9 @@
   },
   "ExpandedNodes": [
     "",
-    "\\engine",
     "\\engine\\src",
-    "\\sandbox",
     "\\sandbox\\src"
   ],
-  "SelectedNode": "\\.gitIgnore",
+  "SelectedNode": "\\Readme.md",
   "PreviewInSolutionExplorer": false
 }

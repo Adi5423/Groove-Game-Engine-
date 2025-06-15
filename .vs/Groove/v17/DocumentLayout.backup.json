@@ -7,12 +7,12 @@
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:engine\\CMakeLists.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\CMakeLists.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:CMakeLists.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\src\\Engine.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:engine\\src\\Engine.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\CMakeLists.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:CMakeLists.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\sandbox\\CMakeLists.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
@@ -38,7 +38,7 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "Engine.h",
               "DocumentMoniker": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\src\\Engine.h",
               "RelativeDocumentMoniker": "engine\\src\\Engine.h",
@@ -59,8 +59,7 @@
               "RelativeToolTip": "engine\\src\\Engine.cpp",
               "ViewState": "AgIAAB8AAAAAAAAAAAAkwDYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-06-15T17:55:35.258Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-15T17:55:35.258Z"
             },
             {
               "$type": "Document",
@@ -72,28 +71,14 @@
               "RelativeToolTip": "sandbox\\src\\main.cpp",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-06-15T17:53:39.437Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-15T17:53:39.437Z"
             }
           ]
         },
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "CMakeLists.txt",
-              "DocumentMoniker": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\CMakeLists.txt",
-              "RelativeDocumentMoniker": "CMakeLists.txt",
-              "ToolTip": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\CMakeLists.txt",
-              "RelativeToolTip": "CMakeLists.txt",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAZAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2025-06-15T17:48:47.671Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -102,7 +87,7 @@
               "RelativeDocumentMoniker": "engine\\CMakeLists.txt",
               "ToolTip": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\CMakeLists.txt",
               "RelativeToolTip": "engine\\CMakeLists.txt",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
               "WhenOpened": "2025-06-15T17:51:05.556Z",
               "EditorCaption": ""
@@ -117,8 +102,19 @@
               "RelativeToolTip": "sandbox\\CMakeLists.txt",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2025-06-15T17:53:20.928Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-15T17:53:20.928Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "CMakeLists.txt",
+              "DocumentMoniker": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\CMakeLists.txt",
+              "RelativeDocumentMoniker": "CMakeLists.txt",
+              "ToolTip": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\CMakeLists.txt",
+              "RelativeToolTip": "CMakeLists.txt",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
+              "WhenOpened": "2025-06-15T17:48:47.671Z"
             }
           ]
         }
