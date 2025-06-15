@@ -8,11 +8,12 @@
   "ExpandedNodes": [
     "",
     "\\engine",
+    "\\engine\\Input",
     "\\engine\\src",
     "\\engine\\Utils",
     "\\sandbox",
     "\\sandbox\\src"
   ],
-  "SelectedNode": "\\sandbox\\src\\main.cpp",
+  "SelectedNode": "\\Readme.md",
   "PreviewInSolutionExplorer": false
 }

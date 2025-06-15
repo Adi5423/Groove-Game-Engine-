@@ -28,7 +28,8 @@ Groove/
 * ✅ Linked via VCPKG with GLFW and GLAD
 * ✅ Working OpenGL context
 * ✅ Engine compiles and runs with output from sandbox
-* ✅ Console logger with color-coded log levels and optional file logging
+* ✅ Custom Logger System
+* ✅ Input handling via `Input::IsKeyPressed()` and `Input::IsMouseButtonPressed()`
 
 ---
 
@@ -101,7 +102,11 @@ GLFW initialized
          ↓
 OpenGL context setup via glad + window creation
          ↓
+Input system initialized (keyboard & mouse)
+         ↓
 Engine::Run() starts → clears screen, polls window events (game loop)
+         ↓
+User presses key or mouse → Logger logs input
          ↓
 User closes window
          ↓
@@ -121,6 +126,7 @@ Engine::Shutdown() called → Logger shutdown → GLFW cleanup
 ## 🗓️ Roadmap
 
 * ✅ Logging system
+* ✅ Input handling
 * [ ] ECS architecture
 * [ ] Event system
 * [ ] Shader & rendering abstraction

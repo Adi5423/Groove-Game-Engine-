@@ -1,5 +1,6 @@
 ﻿#include "Engine.h"
 #include "../Utils/Logger.h" // Add this line
+#include "../Input/Input.h"  // Added for input system
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -33,6 +34,8 @@ void Engine::Init() {
         return;
     }
 
+    Groove::Input::Init(window); // Initialize input system
+
     Groove::Logger::Info(std::string("OpenGL Version: ") + (const char*)glGetString(GL_VERSION));
 }
 
@@ -42,10 +45,20 @@ void Engine::Run() {
         glClearColor(0.1f, 0.12f, 0.15f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
+        // TEMP: Input test logging
+        if (Groove::Input::IsKeyPressed(GLFW_KEY_W)) {
+            Groove::Logger::Info("W key pressed");
+        }
+
+        if (Groove::Input::IsMouseButtonPressed(GLFW_MOUSE_BUTTON_LEFT)) {
+            Groove::Logger::Info("Left mouse button pressed");
+        }
+
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
 }
+
 
 void Engine::Shutdown() {
     glfwDestroyWindow(window);
