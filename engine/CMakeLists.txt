@@ -1,8 +1,11 @@
 add_library(Engine STATIC
     src/Engine.cpp
+    src/Window.cpp                 # <-- Add this
     Utils/Logger.cpp
-    Input/Input.cpp
+    Input/Input.cpp Input/Input.h
+    src/Window.h                   # <-- Header (optional)
 )
+
 
 target_include_directories(Engine
     PUBLIC

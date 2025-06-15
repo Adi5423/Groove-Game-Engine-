@@ -9,27 +9,31 @@ A modular C++ game engine built from scratch using **OpenGL**, **GLFW**, and **C
 ```
 Groove/
 ├── engine/           # Core engine code (Groove)
+│   ├── src/          # Engine main files (Engine.cpp, Window.cpp)
+│   ├── Input/        # Input system module
+│   └── Utils/        # Logger and utility code
 ├── sandbox/          # Sandbox app that links to the engine
 ├── out/              # Build output folder
 ├── CMakeLists.txt    # Root build config
 └── .gitignore
 ```
 
-* `engine/`: Contains reusable engine modules.
-* `sandbox/`: A minimal app for testing engine functionality.
-* `out/build/windows-debug/sandbox/Sandbox.exe`: The final executable after building.
+* `engine/src`: Engine core (`Engine`, `Window`)
+* `engine/Input`: Input module handling mouse/keyboard input
+* `sandbox/`: A minimal app for testing engine functionality
+* `out/build/windows-debug/sandbox/Sandbox.exe`: Final output after build
 
 ---
 
 ## ✅ Features So Far
 
-* ✅ CMake-based modular engine structure
+* ✅ Modular engine architecture using CMake
 * ✅ Visual Studio 2022 support (multi-config builds)
-* ✅ Linked via VCPKG with GLFW and GLAD
-* ✅ Working OpenGL context
-* ✅ Engine compiles and runs with output from sandbox
-* ✅ Custom Logger System
-* ✅ Input handling via `Input::IsKeyPressed()` and `Input::IsMouseButtonPressed()`
+* ✅ GLFW and GLAD linked via VCPKG
+* ✅ Working OpenGL 4.5 context setup
+* ✅ Logging system (Groove::Logger)
+* ✅ Input system for keyboard and mouse
+* ✅ Window abstraction (`Groove::Window`)
 
 ---
 
@@ -46,7 +50,7 @@ Groove/
 > vcpkg install glfw3 glad
 > ```
 
-Ensure `VCPKG_ROOT` is available, or pass the toolchain manually.
+Ensure `VCPKG_ROOT` is set, or pass the toolchain file manually.
 
 ---
 
@@ -66,7 +70,7 @@ cmake -S . -B out/build/windows-debug -G "Visual Studio 17 2022" -A x64 ^
   -DCMAKE_TOOLCHAIN_FILE="D:/vcpkg/scripts/buildsystems/vcpkg.cmake"
 ```
 
-> Make sure to adjust the toolchain path above if needed.
+> Modify the VCPKG path above if needed.
 
 ### 🔹 3. Build the Project
 
@@ -78,18 +82,18 @@ cmake --build out/build/windows-debug --config Debug
 
 ## 🧪 Running the Engine
 
-After a successful build, navigate to the sandbox output directory:
+After a successful build:
 
 ```bash
 cd out/build/windows-debug/sandbox
 Sandbox.exe
 ```
 
-This will launch the test application using the engine.
+This runs the sandbox app using the Groove engine.
 
 ---
 
-## 🔁 Execution Flow
+## 🔄 How It Works
 
 ```
 User runs → Sandbox.exe
@@ -100,38 +104,39 @@ Logger starts → "Initializing GLFW..."
          ↓
 GLFW initialized
          ↓
-OpenGL context setup via glad + window creation
+Window created + OpenGL context setup via GLAD
          ↓
-Input system initialized (keyboard & mouse)
+Input system initialized (keyboard/mouse)
          ↓
 Engine::Run() starts → clears screen, polls window events (game loop)
          ↓
-User presses key or mouse → Logger logs input
+Input test: W key or left mouse click logs to console
          ↓
 User closes window
          ↓
-Engine::Shutdown() called → Logger shutdown → GLFW cleanup
+Engine::Shutdown() → Logger shutdown → GLFW cleanup
 ```
-
----
-
-## 📌 Notes
-
-* Don't commit `.vs/`, `ipch/`, `*.exe`, or `*.VC.db` files — these are local-only.
-* `.gitignore` has been configured to avoid these.
-* The `engine` is still under early development and will evolve in modules (windowing, rendering, input, etc.)
 
 ---
 
 ## 🗓️ Roadmap
 
 * ✅ Logging system
-* ✅ Input handling
+* ✅ Input handling (keyboard + mouse)
+* ✅ Window abstraction class
 * [ ] ECS architecture
 * [ ] Event system
 * [ ] Shader & rendering abstraction
 * [ ] Scene management
-* [ ] UI & ImGui integration (future)
+* [ ] UI layer / ImGui integration (coming up next!)
+
+---
+
+## 📌 Notes
+
+* `.gitignore` avoids committing build, cache, or binary files.
+* The engine is structured to evolve modularly: each system (logging, input, rendering, etc.) has its own source folder.
+* Work is ongoing, with new systems being introduced incrementally.
 
 ---
 
