@@ -7,9 +7,12 @@
   },
   "ExpandedNodes": [
     "",
+    "\\engine",
     "\\engine\\src",
+    "\\engine\\Utils",
+    "\\sandbox",
     "\\sandbox\\src"
   ],
-  "SelectedNode": "\\Readme.md",
+  "SelectedNode": "\\sandbox\\src\\main.cpp",
   "PreviewInSolutionExplorer": false
 }

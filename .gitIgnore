@@ -11,7 +11,7 @@ cmake_install.cmake
 
 # Ignore Visual Studio cache
 .vscode/
-**.vs/**                       # <--- ADD THIS LINE
+.vs/
 *.user
 *.log
 
@@ -21,8 +21,8 @@ cmake_install.cmake
 *.pdb
 
 # Ignore IntelliSense databases
-**/*.VC.db**                   # <--- ADD THIS LINE
-**/*.ipch**                    # <--- ADD THIS LINE
+*.VC.db
+*.ipch
 
 # Ignore OS junk
 .DS_Store

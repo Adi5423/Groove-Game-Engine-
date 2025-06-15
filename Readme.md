@@ -28,6 +28,7 @@ Groove/
 * ✅ Linked via VCPKG with GLFW and GLAD
 * ✅ Working OpenGL context
 * ✅ Engine compiles and runs with output from sandbox
+* ✅ Console logger with color-coded log levels and optional file logging
 
 ---
 
@@ -87,6 +88,28 @@ This will launch the test application using the engine.
 
 ---
 
+## 🔁 Execution Flow
+
+```
+User runs → Sandbox.exe
+         ↓
+main.cpp calls Engine::Init()
+         ↓
+Logger starts → "Initializing GLFW..."
+         ↓
+GLFW initialized
+         ↓
+OpenGL context setup via glad + window creation
+         ↓
+Engine::Run() starts → clears screen, polls window events (game loop)
+         ↓
+User closes window
+         ↓
+Engine::Shutdown() called → Logger shutdown → GLFW cleanup
+```
+
+---
+
 ## 📌 Notes
 
 * Don't commit `.vs/`, `ipch/`, `*.exe`, or `*.VC.db` files — these are local-only.
@@ -97,7 +120,7 @@ This will launch the test application using the engine.
 
 ## 🗓️ Roadmap
 
-* [ ] Logging system
+* ✅ Logging system
 * [ ] ECS architecture
 * [ ] Event system
 * [ ] Shader & rendering abstraction
