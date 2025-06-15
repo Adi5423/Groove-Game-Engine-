@@ -1,0 +1,17 @@
+{
+  "OutputFoldersPerTargetSystem": {
+    "Local Machine": [
+      "out\\build\\windows-debug",
+      "out\\install\\windows-debug"
+    ]
+  },
+  "ExpandedNodes": [
+    "",
+    "\\engine",
+    "\\engine\\src",
+    "\\sandbox",
+    "\\sandbox\\src"
+  ],
+  "SelectedNode": "\\.gitIgnore",
+  "PreviewInSolutionExplorer": false
+}

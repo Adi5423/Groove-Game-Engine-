@@ -1,0 +1,24 @@
+# Ignore build folders
+out/
+build/
+*.vcxproj*
+*.sln
+
+# Ignore CMake files
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+
+# Ignore Visual Studio cache
+.vscode/
+*.user
+*.log
+
+# Ignore binary files
+*.exe
+*.dll
+*.pdb
+
+# Ignore OS junk
+.DS_Store
+Thumbs.db
