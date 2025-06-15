@@ -1,6 +1,6 @@
 ﻿# 🎮 Groove Game Engine
 
-A modular C++ game engine built from scratch using **OpenGL**, **GLFW**, and **CMake**. This is a personal project to understand and implement core game engine architecture — rendering, windowing, and sandbox testing — by building everything from the ground up.
+A modular C++ game engine built from scratch using **OpenGL**, **GLFW**, and **CMake**. This personal engine focuses on garage‑built realism—starting with roads and vehicles in future—while nailing core architecture: rendering, windowing, input, and utilities.
 
 ---
 
@@ -8,22 +8,19 @@ A modular C++ game engine built from scratch using **OpenGL**, **GLFW**, and **C
 
 ```
 Groove/
-├── engine/           # Core engine code (Groove)
-│   ├── src/          # Engine main files (Engine.cpp, Window.cpp)
-│   ├── Input/        # Input system module
-│   └── Utils/        # Logger and utility code
-├── sandbox/          # Sandbox app that links to the engine
-├── out/              # Build output folder
-├── CMakeLists.txt    # Root build config
-└── .gitignore
+├── engine/           # Core engine modules (Input, Renderer, Utils, core)
+│   ├── Input/        # Keyboard & mouse handling
+│   ├── Renderer/     # Shader & graphics rendering
+│   ├── Utils/        # Logger, helpers
+│   └── src/          # Engine lifecycle & window abstraction
+├── sandbox/          # Sample app linking Engine (Sandbox.exe)
+├── out/              # CMake build output
+├── LICENSE.txt       # MIT License
+├── Readme.md         # High‑level overview & instructions
+├── detailed_guide.md # In‑depth architecture & guide
+└── .gitignore        # Ignored files (build, IDE caches, binaries)
 ```
 
-* `engine/src`: Engine core (`Engine`, `Window`)
-* `engine/Input`: Input module handling mouse/keyboard input
-* `sandbox/`: A minimal app for testing engine functionality
-* `out/build/windows-debug/sandbox/Sandbox.exe`: Final output after build
-
----
 
 ## ✅ Features So Far
 
