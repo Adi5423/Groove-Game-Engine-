@@ -1,30 +1,42 @@
-# Ignore build folders
-out/
+# Build artifacts
 build/
-*.vcxproj*
-*.sln
-
-# Ignore CMake files
-CMakeFiles/
-CMakeCache.txt
-cmake_install.cmake
-
-# Ignore Visual Studio cache
-.vscode/
-.vs/
-.vs
-*.user
-*.log
-
-# Ignore binary files
+out/
+bin/
 *.exe
 *.dll
+*.lib
 *.pdb
+*.obj
 
-# Ignore IntelliSense databases
-*.VC.db
+# CMake files
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+install_manifest.txt
+
+# VS files
+*.vcxproj*
+*.sln
+*.user
+*.log
+*.tlog
+*.idb
 *.ipch
+*.opensdf
+*.sdf
 
-# Ignore OS junk
+# VS Code & Visual Studio folders
+.vscode/
+.vs/
+
+# OS-specific
 .DS_Store
 Thumbs.db
+
+# IntelliSense cache
+*.VC.db
+
+# Backup or temp files
+*~
+*.swp

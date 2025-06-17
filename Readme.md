@@ -1,6 +1,6 @@
 ﻿# 🎮 Groove Game Engine
 
-A modular C++ game engine built from scratch using **OpenGL**, **GLFW**, and **CMake**. This personal engine focuses on garage‑built realism—starting with roads and vehicles in future—while nailing core architecture: rendering, windowing, input, and utilities.
+A modular C++ game engine built from scratch using **OpenGL**, **GLFW**, and **CMake**. This personal engine focuses on garage -built realism—starting with roads and vehicles in future—while nailing core architecture: rendering, windowing, input, and utilities.
 
 ---
 
@@ -16,11 +16,10 @@ Groove/
 ├── sandbox/          # Sample app linking Engine (Sandbox.exe)
 ├── out/              # CMake build output
 ├── LICENSE.txt       # MIT License
-├── Readme.md         # High‑level overview & instructions
-├── detailed_guide.md # In‑depth architecture & guide
+├── Readme.md         # High -level overview & instructions
+├── detailed_guide.md # In -depth architecture & guide
 └── .gitignore        # Ignored files (build, IDE caches, binaries)
 ```
-
 
 ## ✅ Features So Far
 
@@ -31,7 +30,7 @@ Groove/
 * ✅ **VCPKG** for GLFW, GLAD, GLM
 * ✅ **Window**: GLFW wrapper with VSync
 * ✅ **Input**: Keyboard & mouse abstraction
-* ✅ **Logging**: Color‑coded console + file output
+* ✅ **Logging**: Color -coded console + file output
 * ✅ **Rendering**: Shader class + test triangle via VAO/VBO
 
 ---
@@ -45,15 +44,15 @@ Groove/
 
 > 🛠️ Packages used:
 >
-> ```
+> ```bash
 > vcpkg install glfw3 glad glm
 > ```
-
-Ensure `VCPKG_ROOT` is set, or pass the toolchain file manually.
+>
+> Make sure `VCPKG_ROOT` is set, or pass the toolchain file manually.
 
 ---
 
-## 💠 Build Instructions
+## 🔠 Build Instructions
 
 ### 🔹 1. Clone the Repo
 
@@ -62,14 +61,20 @@ git clone https://github.com/Adi5423/Groove-Game-Engine.git
 cd Groove-Game-Engine
 ```
 
-### 🔹 2. Configure with CMake (Debug)
+### 🔹 2. Configure with CMake
+
+> Replace `<VCPKG_PATH>` with your actual vcpkg path. If `VCPKG_ROOT` is globally set, this isn't needed.
 
 ```bash
 cmake -S . -B out/build/windows-debug -G "Visual Studio 17 2022" -A x64 ^
-  -DCMAKE_TOOLCHAIN_FILE="D:/vcpkg/scripts/buildsystems/vcpkg.cmake"
+  -DCMAKE_TOOLCHAIN_FILE="<VCPKG_PATH>/scripts/buildsystems/vcpkg.cmake"
 ```
 
-> Modify the VCPKG path above if needed.
+Example:
+
+```bash
+-DCMAKE_TOOLCHAIN_FILE="D:/vcpkg/scripts/buildsystems/vcpkg.cmake"
+```
 
 ### 🔹 3. Build the Project
 
@@ -77,18 +82,25 @@ cmake -S . -B out/build/windows-debug -G "Visual Studio 17 2022" -A x64 ^
 cmake --build out/build/windows-debug --config Debug
 ```
 
+This builds both `engine` and `sandbox` targets.
+
 ---
 
 ## 🧪 Running the Engine
 
-After a successful build:
+After a successful build, run the sandbox app:
 
 ```bash
-cd out/build/windows-debug/sandbox
-Sandbox.exe
+./out/build/windows-debug/sandbox/Sandbox.exe
 ```
 
-This runs the sandbox app using the Groove engine.
+Or from PowerShell:
+
+```powershell
+Start-Process .\out\build\windows-debug\sandbox\Sandbox.exe
+```
+
+You can also run via Visual Studio by setting `sandbox` as the startup project.
 
 ---
 
@@ -126,30 +138,32 @@ Sandbox.exe → Engine::Init() → Logger + Window + GLAD + Input + Renderer
              ↳ Engine::Shutdown() → cleanup subsystems
 ```
 
-
 ---
-
-## 🗓️ Roadmap
 
 ## 🗓️ Roadmap
 
 * ✅ Logging
 * ✅ Input handling
 * ✅ Window abstraction
-* 🔲 Shader abstraction
-* 🔲 Triangle rendering
-* 🔲 ECS framework
-* 🔲 Event dispatch system
-* 🔲 Scene & entity management
-* 🔲 UI/ImGui or QT integration
+* ✅ Shader abstraction
+* ✅ Triangle rendering
+* ☑️ ECS framework
+* ☑️ Event dispatch system
+* ☑️ Scene & entity management
+* ☑️ UI/ImGui or QT integration
 
 ---
 
 ## 📌 Notes
 
-* `.gitignore` avoids committing build, cache, or binary files.
-* The engine is structured to evolve modularly: each system (logging, input, rendering, etc.) has its own source folder.
-* Work is ongoing, with new systems being introduced incrementally.
+* `.gitignore` avoids committing build, cache, and binary files.
+* If `.vs/`, `*.exe`, `*.VC.db`, or build folders show up in GitHub commits—remove them using:
+
+  ```bash
+  git rm --cached filename
+  ```
+* The engine evolves modularly: each system (logging, input, rendering) lives in its own folder.
+* New subsystems are added incrementally.
 
 ---
 
