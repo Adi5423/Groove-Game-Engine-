@@ -2,7 +2,8 @@
 
 > **Next‑gen modular C++ engine** built with OpenGL, GLFW, and CMake.  
 > Focus: Realistic roads & vehicles (future), solid core systems today.
-> Progress: Current Progress mentioned below
+> Progress: Current Progress mentioned below.
+
 ---
 
 ﻿
