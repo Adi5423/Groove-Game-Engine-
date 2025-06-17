@@ -1,20 +1,19 @@
 add_library(Engine STATIC
     src/Engine.cpp
-    src/Window.cpp                 
+    src/Window.cpp
+    src/TimeStep.h        # header only, optional to list
     Utils/Logger.cpp
-    Input/Input.cpp Input/Input.h
-    src/Window.h                   # <-- Header (optional)
-    Renderer/Renderer.cpp Renderer/Renderer.h
-    Renderer/Shader.cpp Renderer/Shader.h
+    Input/Input.cpp
+    Renderer/Renderer.cpp
+    Renderer/Shader.cpp
 )
 
 
-target_include_directories(Engine
-    PUBLIC
-        ${CMAKE_CURRENT_SOURCE_DIR}/src
-        ${CMAKE_CURRENT_SOURCE_DIR}/Utils
-        ${CMAKE_CURRENT_SOURCE_DIR}/Input
-        ${CMAKE_CURRENT_SOURCE_DIR}/Renderer
+target_include_directories(Engine PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/Utils
+    ${CMAKE_CURRENT_SOURCE_DIR}/Input
+    ${CMAKE_CURRENT_SOURCE_DIR}/Renderer
 )
 
 find_package(glfw3 CONFIG REQUIRED)

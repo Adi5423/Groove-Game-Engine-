@@ -9,11 +9,10 @@
     "",
     "\\engine",
     "\\engine\\Input",
+    "\\engine\\Renderer",
     "\\engine\\src",
-    "\\engine\\Utils",
-    "\\sandbox",
-    "\\sandbox\\src"
+    "\\engine\\Utils"
   ],
-  "SelectedNode": "\\engine\\src\\Window.h",
+  "SelectedNode": "\\engine",
   "PreviewInSolutionExplorer": false
 }
