@@ -1,11 +1,11 @@
-﻿markdown
-# 🎮 Groove Game Engine
+﻿# 🎮 Groove Game Engine
 
 > **Next‑gen modular C++ engine** built with OpenGL, GLFW, and CMake.  
 > Focus: Realistic roads & vehicles (future), solid core systems today.
-
+> Progress: Current Progress mentioned below
 ---
 
+﻿
 ## 🚧 Project Structure
 
 ```text
@@ -49,7 +49,7 @@ Groove/
 
 ```bash
 # core libs
-i3sh> vcpkg install glfw3 glad glm imgui[glfw-binding,opengl3-binding]
+vcpkg install glfw3 glad glm imgui[glfw-binding,opengl3-binding]
 ```
 
 ---
@@ -59,26 +59,23 @@ i3sh> vcpkg install glfw3 glad glm imgui[glfw-binding,opengl3-binding]
 1. **Clone**
 
    ```bash
+      git clone [https://github.com/Adi5423/Groove-Game-Engine.git](https://github.com/Adi5423/Groove-Game-Engine.git)
+      cd Groove-Game-Engine
    ```
 
-git clone [https://github.com/Adi5423/Groove-Game-Engine.git](https://github.com/Adi5423/Groove-Game-Engine.git)
-cd Groove-Game-Engine
-
-````
 2. **Configure**
-```bash
-cmake -S . -B out/build/windows-debug -G "Visual Studio 17 2022" -A x64 \
--DCMAKE_TOOLCHAIN_FILE="<VCPKG_PATH>/scripts/buildsystems/vcpkg.cmake"
-````
+   ```bash
+      cmake -S . -B out/build/windows-debug -G "Visual Studio 17 2022" -A x64 \
+      -DCMAKE_TOOLCHAIN_FILE="<VCPKG_PATH>/scripts/buildsystems/vcpkg.cmake"
+   ````
 
 3. **Build**
 
    ```bash
+      cmake --build out/build/windows-debug --config Debug
    ```
 
-cmake --build out/build/windows-debug --config Debug
 
-````
 4. **Run**
 ```bash
 ./out/build/windows-debug/sandbox/Sandbox.exe
@@ -141,4 +138,3 @@ Licensed under the **MIT License**. See `LICENSE.txt`.
 * 📸 [Instagram @adii5423\_](https://www.instagram.com/adii5423_)
 
 Made with ❤️ by Adii
-
