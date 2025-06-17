@@ -6,7 +6,7 @@ add_library(Engine STATIC
     Input/Input.cpp
     Renderer/Renderer.cpp
     Renderer/Shader.cpp
-)
+ "Renderer/ImGuiLayer.cpp")
 
 
 target_include_directories(Engine PUBLIC
@@ -19,10 +19,12 @@ target_include_directories(Engine PUBLIC
 find_package(glfw3 CONFIG REQUIRED)
 find_package(glad CONFIG REQUIRED)
 find_package(glm CONFIG REQUIRED)
+find_package(imgui CONFIG REQUIRED)
 
 target_link_libraries(Engine
     PUBLIC
         glfw
         glad::glad
         glm::glm
+        imgui::imgui
 )

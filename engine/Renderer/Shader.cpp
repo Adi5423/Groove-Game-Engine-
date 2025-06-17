@@ -5,14 +5,14 @@
 namespace Groove {
 
     static int GetUniformLocation(uint32_t program, const std::string& name) {
-        int location = glGetUniformLocation(program, name.c_str());
-        if (location == -1)
-            std::cerr << "[Shader] Warning: uniform '" << name << "' doesn't exist!\n";
-        return location;
+        int loc = glGetUniformLocation(program, name.c_str());
+        if (loc == -1)
+            std::cerr << "[Shader] Warning: uniform '" << name << "' not found!\n";
+        return loc;
     }
 
-    Shader::Shader(const std::string& vertexSrc, const std::string& fragmentSrc) {
-        m_RendererID = CreateShaderProgram(vertexSrc, fragmentSrc);
+    Shader::Shader(const std::string& vertSrc, const std::string& fragSrc) {
+        m_RendererID = CreateShaderProgram(vertSrc, fragSrc);
     }
 
     Shader::~Shader() {
@@ -25,45 +25,46 @@ namespace Groove {
         glShaderSource(id, 1, &src, nullptr);
         glCompileShader(id);
 
-        int result;
-        glGetShaderiv(id, GL_COMPILE_STATUS, &result);
-        if (result == GL_FALSE) {
+        int success;
+        glGetShaderiv(id, GL_COMPILE_STATUS, &success);
+        if (!success) {
             int length;
             glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
-            std::string message(length, ' ');
-            glGetShaderInfoLog(id, length, &length, &message[0]);
-            std::cerr << "[Shader] Failed to compile "
-                << (type == GL_VERTEX_SHADER ? "vertex" : "fragment")
-                << " shader!\n" << message << "\n";
+            std::string msg(length, ' ');
+            glGetShaderInfoLog(id, length, &length, &msg[0]);
+            std::cerr << "[Shader] Compile error: " << msg << "\n";
             glDeleteShader(id);
             return 0;
         }
-
         return id;
     }
 
-    uint32_t Shader::CreateShaderProgram(const std::string& vertSrc, const std::string& fragSrc) {
+    uint32_t Shader::CreateShaderProgram(const std::string& vs, const std::string& fs) {
         uint32_t program = glCreateProgram();
-        uint32_t vs = CompileShader(GL_VERTEX_SHADER, vertSrc);
-        uint32_t fs = CompileShader(GL_FRAGMENT_SHADER, fragSrc);
+        uint32_t v = CompileShader(GL_VERTEX_SHADER, vs);
+        uint32_t f = CompileShader(GL_FRAGMENT_SHADER, fs);
 
-        glAttachShader(program, vs);
-        glAttachShader(program, fs);
+        glAttachShader(program, v);
+        glAttachShader(program, f);
         glLinkProgram(program);
-        glValidateProgram(program);
 
-        glDeleteShader(vs);
-        glDeleteShader(fs);
+        int success;
+        glGetProgramiv(program, GL_LINK_STATUS, &success);
+        if (!success) {
+            int length;
+            glGetProgramiv(program, GL_INFO_LOG_LENGTH, &length);
+            std::string msg(length, ' ');
+            glGetProgramInfoLog(program, length, &length, &msg[0]);
+            std::cerr << "[Shader] Link error: " << msg << "\n";
+        }
+
+        glDeleteShader(v);
+        glDeleteShader(f);
         return program;
     }
 
-    void Shader::Bind() const {
-        glUseProgram(m_RendererID);
-    }
-
-    void Shader::Unbind() const {
-        glUseProgram(0);
-    }
+    void Shader::Bind() const { glUseProgram(m_RendererID); }
+    void Shader::Unbind() const { glUseProgram(0); }
 
     void Shader::SetUniform1i(const std::string& name, int value) {
         glUniform1i(GetUniformLocation(m_RendererID, name), value);
@@ -71,10 +72,6 @@ namespace Groove {
 
     void Shader::SetUniform1f(const std::string& name, float value) {
         glUniform1f(GetUniformLocation(m_RendererID, name), value);
-    }
-
-    void Shader::SetUniformMat4f(const std::string& name, const glm::mat4& matrix) {
-        glUniformMatrix4fv(GetUniformLocation(m_RendererID, name), 1, GL_FALSE, &matrix[0][0]);
     }
 
 }

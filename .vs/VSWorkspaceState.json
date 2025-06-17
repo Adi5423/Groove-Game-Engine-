@@ -11,8 +11,10 @@
     "\\engine\\Input",
     "\\engine\\Renderer",
     "\\engine\\src",
-    "\\engine\\Utils"
+    "\\engine\\Utils",
+    "\\sandbox",
+    "\\sandbox\\src"
   ],
-  "SelectedNode": "\\engine",
+  "SelectedNode": "\\engine\\src\\Engine.cpp",
   "PreviewInSolutionExplorer": false
 }

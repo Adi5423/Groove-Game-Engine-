@@ -11,21 +11,18 @@ static float s_TriangleVertices[] = {
 };
 
 // Inline GLSL sources
-static const char* vertexShaderSrc = R"(
+static const char* vertexSrc = R"(
 #version 450 core
 layout(location = 0) in vec3 aPos;
-void main() {
-    gl_Position = vec4(aPos, 1.0);
-}
+void main() { gl_Position = vec4(aPos,1.0); }
 )";
 
-static const char* fragmentShaderSrc = R"(
+static const char* fragmentSrc = R"(
 #version 450 core
 out vec4 FragColor;
-void main() {
-    FragColor = vec4(0.9, 0.3, 0.4, 1.0);
-}
+void main() { FragColor = vec4(0.9,0.3,0.4,1.0); }
 )";
+
 
 namespace Groove {
 
@@ -50,7 +47,7 @@ namespace Groove {
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 
         // Create shader
-        s_Shader = new Shader(vertexShaderSrc, fragmentShaderSrc);
+        s_Shader = new Shader(vertexSrc, fragmentSrc);
         s_Shader->Bind();
 
         Logger::Info("Renderer initialized.");
