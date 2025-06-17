@@ -1,22 +1,21 @@
-#pragma once
+#pragma once  
 
-namespace Groove {
+namespace Groove {  
 
-    class Renderer {
-    public:
-        // Call once after GL and window init
-        static void Init();
+    class Renderer {  
+    public:  
+        // Call once after GL and window init  
+        static void Init();  
 
-        // Draw a simple test triangle
-        static void DrawTriangle();
+        // Draw a cube with transform and camera  
+        static void DrawCube(const class Transform& t, const class Camera& cam);  
 
-        // Call on shutdown if needed
-        static void Shutdown();
+        // Call on shutdown if needed  
+        static void Shutdown();  
 
-    private:
-        static unsigned int s_VAO;
-        static unsigned int s_VBO;
-        static class Shader* s_Shader;
-    };
+    private:  
+        static unsigned int s_VAO, s_VBO, s_IBO;
+        static class Shader* s_Shader;  
+    };  
 
 }

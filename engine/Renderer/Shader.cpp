@@ -1,6 +1,8 @@
 #include "Shader.h"
 #include <glad/glad.h>
 #include <iostream>
+#include <glm/gtc/type_ptr.hpp>
+#include "../Utils/Logger.h" 
 
 namespace Groove {
 
@@ -28,13 +30,10 @@ namespace Groove {
         int success;
         glGetShaderiv(id, GL_COMPILE_STATUS, &success);
         if (!success) {
-            int length;
-            glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
-            std::string msg(length, ' ');
-            glGetShaderInfoLog(id, length, &length, &msg[0]);
-            std::cerr << "[Shader] Compile error: " << msg << "\n";
-            glDeleteShader(id);
-            return 0;
+            char infoLog[512];
+            glGetShaderInfoLog(id, 512, NULL, infoLog);
+            std::string errorMessage = "Shader Compilation Failed:\n" + std::string(infoLog);
+            Logger::Error(errorMessage);
         }
         return id;
     }
@@ -74,4 +73,7 @@ namespace Groove {
         glUniform1f(GetUniformLocation(m_RendererID, name), value);
     }
 
+    void Shader::SetUniformMat4f(const std::string& name, const glm::mat4& matrix) {
+        glUniformMatrix4fv(GetUniformLocation(m_RendererID, name), 1, GL_FALSE, glm::value_ptr(matrix));
+    }
 }

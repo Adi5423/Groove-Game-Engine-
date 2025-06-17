@@ -2,6 +2,9 @@
 #include <iostream>
 #include <fstream>
 #include <windows.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/string_cast.hpp>
 
 namespace Groove {
 
@@ -21,10 +24,21 @@ namespace Groove {
         }
     }
 
-    void Logger::Info(const std::string& message)    { Log(message, LogLevel::Info); }
-    void Logger::Warning(const std::string& message) { Log(message, LogLevel::Warning); }
-    void Logger::Error(const std::string& message)   { Log(message, LogLevel::Error); }
-    void Logger::Debug(const std::string& message)   { Log(message, LogLevel::Debug); }
+    void Logger::Info(const std::string& message) {
+        Log(message, LogLevel::Info);
+    }
+
+    void Logger::Warning(const std::string& message) {
+        Log(message, LogLevel::Warning);
+    }
+
+    void Logger::Error(const std::string& message) {
+        Log(message, LogLevel::Error);
+    }
+
+    void Logger::Debug(const std::string& message) {
+        Log(message, LogLevel::Debug);
+    }
 
     void Logger::Log(const std::string& message, LogLevel level) {
         HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -60,5 +74,11 @@ namespace Groove {
             }
             s_LogFile << message << std::endl;
         }
+    }
+
+    void LogMatrices(const glm::mat4& model, const glm::mat4& view, const glm::mat4& proj) {
+        Logger::Info("Model:\n" + glm::to_string(model));
+        Logger::Info("View:\n" + glm::to_string(view));
+        Logger::Info("Proj:\n" + glm::to_string(proj));
     }
 }

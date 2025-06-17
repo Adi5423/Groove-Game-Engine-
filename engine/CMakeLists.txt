@@ -6,7 +6,11 @@ add_library(Engine STATIC
     Input/Input.cpp
     Renderer/Renderer.cpp
     Renderer/Shader.cpp
- "Renderer/ImGuiLayer.cpp")
+    Renderer/ImGuiLayer.cpp
+    src/Camera.h 
+    src/Camera.cpp 
+    src/Transform.h
+)
 
 
 target_include_directories(Engine PUBLIC
