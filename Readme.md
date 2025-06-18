@@ -122,11 +122,12 @@ Sandbox.exe
 ---
 
 ## 🖼️ Output Screenshots
+These proofs wont show the rotation of cube (as they are image :) ) , will update the video proof soon.
 
 | Proof        | Preview                         |
 | ------------ | ------------------------------- |
-| `proof1.png` | ![proof1](resources/proof1.png) |
-| `proof2.png` | ![proof2](resources/proof2.png) |
+| `proof1.png` | ![proof1](proof1.png) |
+| `proof2.png` | ![proof2](proof2.png) |
 
 ---
 
