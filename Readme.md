@@ -21,9 +21,8 @@ Groove/
 │   └── src/          # Engine lifecycle, Window, TimeStep, Camera
 ├── sandbox/          # Demo application (Sandbox.exe)
 ├── out/              # CMake build output
-├── resources/        # Screenshots, textures, shaders
-│   ├── proof1.png    # Output screenshot 1
-│   └── proof2.png    # Output screenshot 2
+├── proof1.png        # Output screenshot 1
+└── proof2.png        # Output screenshot 2
 ├── LICENSE.txt       # [MIT License](LICENSE.txt)
 ├── README.md         # Overview & quickstart
 ├── detailed_guide.md # In‑depth architecture & guide
