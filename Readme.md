@@ -63,7 +63,7 @@ vcpkg install glfw3 glad glm imgui[glfw-binding,opengl3-binding]
 1. **Clone**
 
    ```bash
-      git clone [https://github.com/Adi5423/Groove-Game-Engine.git](https://github.com/Adi5423/Groove-Game-Engine.git)
+      git clone https://github.com/Adi5423/Groove-Game-Engine.git 
       cd Groove-Game-Engine
    ```
 
