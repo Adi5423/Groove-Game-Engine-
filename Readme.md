@@ -126,8 +126,8 @@ These proofs wont show the rotation of cube (as they are image :) ) , will updat
 
 | Proof        | Preview                         |
 | ------------ | ------------------------------- |
-| `proof1.png` | ![proof1](./proof1.png) |
-| `proof2.png` | ![proof2](proof2.png) |
+| `proof1.png` | ![proof1](prrof1.png) |
+| `proof2.png` | ![proof2](prrof2.png) |
 
 ---
 
