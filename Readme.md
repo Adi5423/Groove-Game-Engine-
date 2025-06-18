@@ -1,46 +1,49 @@
-﻿﻿# 🎮 Groove Game Engine
+# 🎮 Groove Game Engine
 
-> **Next‑gen modular C++ engine** built with OpenGL, GLFW, and CMake.  
+> **Next‑gen modular C++ engine** built with OpenGL, GLFW, and CMake.
 > Focus: Realistic roads & vehicles (future), solid core systems today.
 
-## 🚧 Implemented the 3D Cube Renderer and it's shaders (rotating cube animation) , working perfectly.
-> **If u see a 3d cube in red color everything working perfectly 
-> can also Check left , right mouse button and W key pressing , it tracks that. :) i added a lot.
+## 🚧 Implemented the 3D Cube Renderer and its shaders (rotating cube animation), working perfectly.
+
+> **If you see a 3D red cube**, everything is working!
+> Try left & right mouse buttons and the `W` key — inputs are tracked 🎮
 
 ---
 
-﻿
-## 🚧 Project Structure
+## 📁 Project Structure
 
 ```text
 Groove/
 ├── engine/           # Core modules
 │   ├── Input/        # Keyboard & mouse handling
-│   ├── Renderer/     # Shader & triangle rendering
-│   ├── Utils/        # Logger & utilities
-│   └── src/          # Engine lifecycle & window
-├── sandbox/          # Demo app (Sandbox.exe)
-├── out/              # Build artifacts
-├── LICENSE.txt       # MIT License
+│   ├── Renderer/     # Shader, rendering, ImGui integration
+│   ├── Utils/        # Logger & utility classes
+│   └── src/          # Engine lifecycle, Window, TimeStep, Camera
+├── sandbox/          # Demo application (Sandbox.exe)
+├── out/              # CMake build output
+├── resources/        # Screenshots, textures, shaders
+│   ├── proof1.png    # Output screenshot 1
+│   └── proof2.png    # Output screenshot 2
+├── LICENSE.txt       # [MIT License](LICENSE.txt)
 ├── README.md         # Overview & quickstart
-├── detailed_guide.md # In‑depth architecture
+├── detailed_guide.md # In‑depth architecture & guide
 └── .gitignore        # Excluded files
-````
+```
 
 ---
 
 ## ✅ Features
 
-| Subsystem       | Status | Highlights                                  |
-| --------------- | :----: | ------------------------------------------- |
-| **CMake Build** |    ✅   | Modular engine & sandbox presets            |
-| **Windowing**   |    ✅   | GLFW wrapper + VSync                        |
-| **Input**       |    ✅   | Keyboard & mouse API                        |
-| **Logging**     |    ✅   | Color‑coded console & file output           |
-| **Rendering**   |    ✅   | Shader class + VAO/VBO triangle             |
-| **UI (ImGui)**  |    ✅   | Overlaid ImGui panels                       |
-| **Delta Time**  |    ✅   | Frame‑time (`TimeStep`) integration         |
-| **Next…**       |   🔲   | ECS, event system, scene graph, vehicle sim |
+| Subsystem             | Status | Highlights                              |
+| --------------------- | :----: | --------------------------------------- |
+| **CMake Build**       |    ✅   | Modular engine & sandbox targets        |
+| **Windowing**         |    ✅   | GLFW wrapper + VSync                    |
+| **Input**             |    ✅   | Keyboard & mouse API                    |
+| **Logging**           |    ✅   | Color‑coded console & file output       |
+| **Rendering (2D/3D)** |    ✅   | Shader + rotating cube with VAO/VBO/IBO |
+| **UI (ImGui)**        |    ✅   | ImGui overlay panels                    |
+| **Delta Time**        |    ✅   | TimeStep frame‑time integration         |
+| **Next…**             |   🔲   | ECS, events, scene system, vehicles     |
 
 ---
 
@@ -52,63 +55,59 @@ Groove/
 * **vcpkg** (GLFW, GLAD, GLM, ImGui)
 
 ```bash
-# core libs
+# Core libraries
 vcpkg install glfw3 glad glm imgui[glfw-binding,opengl3-binding]
 ```
+
+Make sure `VCPKG_ROOT` is set or pass the toolchain file via `-DCMAKE_TOOLCHAIN_FILE`.
 
 ---
 
 ## 🚀 Quick Start
 
-1. **Clone**
+### 1. Clone
 
-   ```bash
-      git clone https://github.com/Adi5423/Groove-Game-Engine.git 
-      cd Groove-Game-Engine
-   ```
+```bash
+git clone https://github.com/Adi5423/Groove-Game-Engine.git
+cd Groove-Game-Engine
+```
 
-2. **Configure**
-   ```bash
-      cmake -S . -B out/build/windows-debug -G "Visual Studio 17 2022" -A x64 \
-      -DCMAKE_TOOLCHAIN_FILE="<VCPKG_PATH_Entered-While-Installation>/scripts/buildsystems/vcpkg.cmake"
-   ````
+### 2. Configure (CMake)
 
-3. **Build**
+```bash
+cmake -S . -B out/build/windows-debug -G "Visual Studio 17 2022" -A x64 \
+  -DCMAKE_TOOLCHAIN_FILE="<VCPKG_PATH>/scripts/buildsystems/vcpkg.cmake"
+```
 
-   ```bash
-      cmake --build out/build/windows-debug --config Debug
-   ```
+### 3. Build
 
+```bash
+cmake --build out/build/windows-debug --config Debug
+```
 
-4. **Run**
+### 4. Run
+
 ```bash
 ./out/build/windows-debug/sandbox/Sandbox.exe
-````
+```
 
 ---
 
-## ✅ If u have Visual Studio Installed.
+## 🧩 Visual Studio (Optional)
 
-> Tip: If u have Visual Studio Installed follow this after installing VCPKG as mentioned above , just vcpkg installation then this approach , if having Visual Studio.
+> If you have Visual Studio installed and VCPKG set up:
 
-0. **Open the cloned folder in Visual Studio.**
+1. Open the root folder in VS (`Groove-Game-Engine/`).
+2. Open any `CMakeLists.txt`, edit and undo (forces generation).
+3. Wait for "CMake generation finished".
+4. Press `Ctrl+Shift+B` or use **Build > Rebuild All**.
+5. Run `Sandbox.exe` from:
 
-   ```text
-	first , just open any the CMakeLists.txt , remove any letter from file then save , then Undo(Ctrl+Z) then save again.
-	This will generate the CMakeBuild Files , ready to Build and Test.
-   ```
+```text
+./out/build/windows-debug/sandbox/Sandbox.exe
+```
 
-   ```text
-	If u see CMake Generated Finished in Visual Studio , good to for Build.
-	Press "Ctrl+Shift+B" or can do -> Press Build in topbar -> then press Rebuild or Build All.
-	Following any of step will generate the build files to run the final Exe.
-
-	If All Build Successfull , the exe will be in the lcoation - Groove-Game-Engine(root)\out\build\windows-debug\sandbox\Sandbox.exe
-
-	Run the if encounter any error in anywhere , either mail or mess me personally with that. 
-
-	Will update the Readme , with perfect build steps detaile soon.
-   ```
+If you run into any issues, feel free to [email](mailto:adii54ti23@gmail.com) or DM.
 
 ---
 
@@ -116,17 +115,19 @@ vcpkg install glfw3 glad glm imgui[glfw-binding,opengl3-binding]
 
 ```text
 Sandbox.exe
-  ↳ Engine::Init()
-     • Logger + Window + GLAD + Input + Renderer + ImGui
-  ↳ Engine::Run()
-     • Clear screen
-     • Process input + delta time
-     • Draw triangle
-     • ImGui frame
-     • Swap buffers & poll events
-  ↳ Engine::Shutdown()
-     • Cleanup subsystems
+  ↳ Engine::Init()     // Logger, Window, GLAD, Input, Renderer, ImGui
+  ↳ Engine::Run()      // Clear, input, delta-time, draw, UI, swap & poll
+  ↳ Engine::Shutdown() // Cleanup subsystems
 ```
+
+---
+
+## 🖼️ Output Screenshots
+
+| Proof        | Preview                         |
+| ------------ | ------------------------------- |
+| `proof1.png` | ![proof1](resources/proof1.png) |
+| `proof2.png` | ![proof2](resources/proof2.png) |
 
 ---
 
@@ -137,6 +138,7 @@ Sandbox.exe
 * [x] Window abstraction
 * [x] Shader & triangle rendering
 * [x] ImGui integration
+* [x] **3D Cube Renderer**
 * [ ] ECS framework
 * [ ] Event dispatch system
 * [ ] Scene & entity management
@@ -146,15 +148,15 @@ Sandbox.exe
 
 ## 📌 Notes
 
-* `.gitignore` excludes build dirs, IDE caches, large files.
-* Use `git rm --cached <file>` to untrack stray binaries.
-* Architecture is modular—drop in new subsystems under `engine/`.
+* `.gitignore` excludes build dirs, IDE caches, and large files.
+* Remove stray binaries with `git rm --cached <file>`.
+* Architecture is modular: drop in new subsystems under `engine/`.
 
 ---
 
 ## 📜 License
 
-Licensed under the **MIT License**. See `LICENSE.txt`.
+Licensed under the **MIT License**. See [`LICENSE.txt`](LICENSE.txt).
 
 ---
 
