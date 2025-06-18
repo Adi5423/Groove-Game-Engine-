@@ -166,8 +166,7 @@
               "RelativeToolTip": "engine\\Renderer\\Renderer.cpp",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAGAAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-06-15T22:13:44.617Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-15T22:13:44.617Z"
             },
             {
               "$type": "Document",
@@ -275,8 +274,7 @@
               "RelativeToolTip": "engine\\Utils\\Logger.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-06-15T20:41:46.011Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-15T20:41:46.011Z"
             },
             {
               "$type": "Document",
@@ -298,7 +296,7 @@
               "RelativeDocumentMoniker": "engine\\Utils\\Logger.cpp",
               "ToolTip": "D:\\Programming\\C_Level\\C\u002B\u002B\\Game_Engine_Dev\\trial_one\\Groove\\engine\\Utils\\Logger.cpp",
               "RelativeToolTip": "engine\\Utils\\Logger.cpp",
-              "ViewState": "AgIAABUAAAAAAAAAAAAuwE4AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABUAAAAAAAAAAAAuwB4AAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-06-15T20:41:17.191Z",
               "EditorCaption": ""
@@ -343,8 +341,12 @@
         },
         {
           "DockedWidth": 191,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
             {
               "$type": "Document",
               "DocumentIndex": 1,
