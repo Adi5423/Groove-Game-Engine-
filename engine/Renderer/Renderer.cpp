@@ -99,7 +99,8 @@ namespace Groove {
         glBindVertexArray(s_VAO);
         glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, nullptr);
     }
-    void SetCameraPerspective(Camera& cam, float aspect) {
+
+    void Renderer::SetCameraPerspective(Camera& cam, float aspect) {
         cam.SetPerspective(glm::radians(45.0f), aspect, 0.1f, 100.0f);
     }
 

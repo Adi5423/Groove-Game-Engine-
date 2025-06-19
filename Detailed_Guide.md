@@ -1,120 +1,145 @@
-﻿# 🎮 Groove Game Engine
+﻿<p align="center">
+  <img src="resources/proof1.png" alt="Groove Engine Cube" width="120"/>
+</p>
 
-A modular C++ game engine built from scratch using **OpenGL**, **GLFW**, and **CMake**. This personal engine focuses on garage‑built realism—starting with roads and vehicles in future—while nailing core architecture: rendering, windowing, input, and utilities.
-
----
-
-## 🚧 Project Structure
-
-```
-Groove/
-├── engine/           # Core engine modules (Input, Renderer, Utils, core)
-│   ├── Input/        # Keyboard & mouse handling
-│   ├── Renderer/     # Shader & graphics rendering
-│   ├── Utils/        # Logger, helpers
-│   └── src/          # Engine lifecycle & window abstraction
-├── sandbox/          # Sample app linking Engine (Sandbox.exe)
-├── out/              # CMake build output
-├── LICENSE.txt       # MIT License
-├── Readme.md         # High‑level overview & instructions
-├── detailed_guide.md # In‑depth architecture & guide
-└── .gitignore        # Ignored files (build, IDE caches, binaries)
-```
+<h1 align="center">📝 Detailed Guide: Groove Game Engine</h1>
 
 ---
 
-## ✅ Features So Far
-
-* **Modular CMake**: Engine & sandbox projects
-* **VS2022** support (multi-config)
-* **VCPKG** for GLFW, GLAD, GLM
-* **Window**: GLFW wrapper with VSync
-* **Input**: Keyboard & mouse abstraction
-* **Logging**: Color‑coded console + file output
-* **Rendering**: Shader class + test triangle via VAO/VBO
-
----
-
-## 💻 Requirements
-
-* **C++17** or higher
-* **Visual Studio 2022** (Desktop C++ workload)
-* **CMake 3.26+**
-* **VCPKG** for dependencies
-
-```bash
-vcpkg install glfw3 glad glm
-```
+## 📚 Table of Content
+- [🏗️ Architecture Overview](#-architecture-overview)
+- [🖥️ Engine Initialization & Main Loop](#-engine-initialization--main-loop)
+- [🎮 Input & Camera System](#-input--camera-system)
+- [🖌️ Rendering Pipeline](#-rendering-pipeline)
+- [🧩 ImGui Integration](#-imgui-integration)
+- [📝 Logging & Debugging](#-logging--debugging)
+- [⚙️ Build System (CMake & vcpkg)](#-build-system-cmake--vcpkg)
+- [🔍 Code Walkthrough & Core Mechanics](#-code-walkthrough--core-mechanics)
+- [🔗 References & Further Reading](#-references--further-reading)
 
 ---
 
-## 💠 Quick Start
+## 🏗️ Architecture Overview
 
-1. **Clone** the repo:
-
-   ```bash
-   ```
-
-git clone [https://github.com/Adi5423/Groove-Game-Engine.git](https://github.com/Adi5423/Groove-Game-Engine.git)
-cd Groove-Game-Engine
-
-````
-2. **Configure**:
-```bash
-cmake -S . -B out/build/windows-debug -G "Visual Studio 17 2022" -A x64 \
--DCMAKE_TOOLCHAIN_FILE="D:/vcpkg/scripts/buildsystems/vcpkg.cmake"
-````
-
-3. **Build**:
-
-   ```bash
-   ```
-
-cmake --build out/build/windows-debug --config Debug
-
-````
-4. **Run**:
-```bash
-cd out/build/windows-debug/sandbox
-Sandbox.exe
-````
+- **Engine Core**: Orchestrates all subsystems (window, input, renderer, camera, ImGui, logger).
+- **Window**: Abstracts GLFW window creation, VSync, and event polling.
+- **Input**: Centralizes keyboard/mouse state, edge detection, and mouse deltas.
+- **Renderer**: Handles OpenGL context, shaders, and all draw calls (3D cube, ImGui).
+- **Camera**: Free-fly camera with position, yaw, pitch, and movement logic.
+- **ImGui Layer**: Integrates ImGui for real-time UI and debugging.
+- **Logger**: Thread-safe, color-coded logging to file and console.
+- **Transform**: Simple struct for position, rotation, and scale.
 
 ---
 
-## 🔁 Execution Flow
+## 🖥️ Engine Initialization & Main Loop
 
-```
-Sandbox.exe → Engine::Init() → Logger + Window + GLAD + Input + Renderer
-             ↳ Engine::Run() → clear screen, input checks, draw triangle, swap buffers, poll events
-             ↳ Engine::Shutdown() → cleanup subsystems
-```
+### Initialization (`Engine::Init`)
+- Logger starts first to capture all events.
+- Window is created (GLFW), OpenGL context is set up (GLAD).
+- Input is initialized and hooked to the window.
+- Renderer is set up, including OpenGL state and resources.
+- Camera is created and positioned to view the scene.
+- ImGui Layer is initialized after OpenGL context is ready.
+- Cursor is locked for immersive camera control.
 
----
+### Main Loop (`Engine::Run`)
+- Delta time is calculated each frame for smooth movement and animation.
+- Input is polled: keyboard for movement, mouse for camera look, ESC for toggling camera/cursor.
+- Camera processes input only when active, updating position and orientation.
+- Scene is rendered: screen is cleared, cube is rotated and drawn, ImGui overlays are rendered.
+- Logging: Every second, camera and cube state are logged for debugging.
+- Window swaps buffers and polls events.
 
-## 🗓️ Roadmap
-
-* ✅ Logging
-* ✅ Input handling
-* ✅ Window abstraction
-* 🔲 Shader abstraction
-* 🔲 Triangle rendering
-* 🔲 ECS framework
-* 🔲 Event dispatch system
-* 🔲 Scene & entity management
-* 🔲 UI/ImGui integration
-
----
-
-## 📜 License
-
-This project is licensed under the **MIT License**. See `LICENSE.txt`.
+### Shutdown (`Engine::Shutdown`)
+- ImGui Layer is shut down and deleted.
+- Renderer is cleaned up.
+- Window and Camera are deleted.
+- Logger writes final messages and closes.
 
 ---
 
-## 📌 Contact & Social
+## 🎮 Input & Camera System
 
-* **Email:** [adii54ti23@gmail.com](mailto:adii54ti23@gmail.com)
-* **LinkedIn:** [Aditya Tiwari](https://www.linkedin.com/in/aditya-tiwari-141731329/)
-* **Instagram:** [@adii5423\_](https://www.instagram.com/adii5423_)
+- **Input**: Abstracted for easy extension; supports polling and edge detection.
+- **Camera**: WASD/Space/CTRL for 3D navigation, mouse for look.
+- **ESC**: Toggles between camera control (cursor locked) and UI mode (cursor visible).
+- **Mouse Delta**: Used for smooth, frame-rate-independent camera rotation.
 
-Made with ❤️ by Adii
+---
+
+## 🖌️ Rendering Pipeline
+
+- **Renderer**: Initialized after OpenGL context is ready.
+- **DrawCube**: Uses current transform and camera view/projection.
+- **ImGui**: Rendered after the 3D scene, allowing real-time UI and debug panels.
+- **Transform**: Used for all scene objects (currently, the rotating cube).
+
+---
+
+## 🧩 ImGui Integration
+
+- **ImGuiLayer**: Handles all ImGui setup, frame begin/end, and shutdown.
+- **Panels**: Custom panels (e.g., "Groove Engine") for engine state, debug info, or tools.
+- **Initialization**: Only after OpenGL context is valid.
+
+---
+
+## 📝 Logging & Debugging
+
+- **Logger**: Always available, capturing info, warnings, and errors.
+- **Color-coded**: Console output and file logging.
+- **State Logging**: Camera position, cube rotation, and other key info logged every second.
+
+---
+
+## ⚙️ Build System (CMake & vcpkg)
+
+- **CMake**: Modular, supports Ninja and Visual Studio generators.
+- **vcpkg**: Manages all third-party dependencies (GLFW, GLAD, GLM, ImGui).
+- **Minimum CMake**: 3.21 for modern features and compatibility.
+- **Visual Studio**: Open the root folder, edit CMake, and build.
+
+---
+
+## 🔍 Code Walkthrough & Core Mechanics
+
+### Engine Startup
+- See [`engine/src/Engine.cpp`](engine/src/Engine.cpp) for the full lifecycle.
+- `Engine::Init()` sets up all subsystems in order.
+- `Engine::Run()` is the main loop, handling input, camera, rendering, ImGui, and logging.
+- `Engine::Shutdown()` cleans up everything in reverse order.
+
+### Input & Camera
+- Input is polled every frame (`Groove::Input::IsKeyPressed`).
+- Camera movement and rotation are handled in the main loop, only when camera is active.
+- Mouse delta is used for smooth camera look (`Groove::Input::GetMouseDelta`).
+
+### Rendering
+- Renderer is initialized after OpenGL context is ready.
+- `Groove::Renderer::DrawCube` draws a 3D cube using the current transform and camera.
+- ImGui overlays are rendered after the 3D scene.
+
+### ImGui
+- ImGuiLayer wraps all ImGui setup, frame begin/end, and shutdown.
+- Panels can be extended for real-time debug info.
+
+### Logging
+- Logger is initialized first and shut down last.
+- Logs are written every second with camera and cube state.
+
+---
+
+## 🔗 References & Further Reading
+
+- [GLFW Documentation](https://www.glfw.org/docs/latest/)
+- [GLAD OpenGL Loader](https://glad.dav1d.de/)
+- [ImGui](https://github.com/ocornut/imgui)
+- [GLM Mathematics](https://github.com/g-truc/glm)
+- [CMake Documentation](https://cmake.org/cmake/help/latest/)
+
+---
+
+> For further details, see the source code and comments in the `engine/` and `sandbox/` directories. This guide is meant to provide both a high-level overview and a deep technical reference for anyone wishing to understand or extend the Groove Game Engine.
+
+_Made with ❤️ by Adii_

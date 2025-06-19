@@ -12,8 +12,10 @@
     "\\engine\\Renderer",
     "\\engine\\src",
     "\\engine\\Utils",
+    "\\resources",
     "\\sandbox",
     "\\sandbox\\src"
   ],
+  "SelectedNode": "\\CMakeLists.txt",
   "PreviewInSolutionExplorer": false
 }
