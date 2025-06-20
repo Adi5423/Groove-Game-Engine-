@@ -1,8 +1,9 @@
 #include "Renderer.h"
+#include "../src/Transform.hpp"
 #include "Shader.h"
 #include "../Utils/Logger.h"
 #include <glad/glad.h>
-#include <Transform.h>
+//#include <Transform.h>
 #include <Camera.h>
 
 // Cube: 8 vertices, 36 indices (12 triangles)
@@ -54,6 +55,7 @@ namespace Groove {
 
     unsigned int Renderer::s_VAO = 0;
     unsigned int Renderer::s_VBO = 0;
+    unsigned int Renderer::s_IBO = 0; // Define the missing static member
     Shader* Renderer::s_Shader = nullptr;
 
 
@@ -76,10 +78,6 @@ namespace Groove {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(cubeIndices), cubeIndices, GL_STATIC_DRAW);
 
-        glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-
-        // Enable vertex attribute 0 (position)
         glEnableVertexAttribArray(0);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 

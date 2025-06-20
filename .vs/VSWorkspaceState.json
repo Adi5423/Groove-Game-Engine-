@@ -2,7 +2,11 @@
   "OutputFoldersPerTargetSystem": {
     "Local Machine": [
       "out\\build\\windows-debug",
-      "out\\install\\windows-debug"
+      "out\\install\\windows-debug",
+      "out\\build\\Configure preset using toolchain file",
+      "out\\install\\Configure preset using toolchain file",
+      "out\\build\\CMakePresets.json",
+      "out\\install\\CMakePresets.json"
     ]
   },
   "ExpandedNodes": [
@@ -12,10 +16,9 @@
     "\\engine\\Renderer",
     "\\engine\\src",
     "\\engine\\Utils",
-    "\\resources",
     "\\sandbox",
     "\\sandbox\\src"
   ],
-  "SelectedNode": "\\CMakeLists.txt",
+  "SelectedNode": "\\engine\\Renderer\\Renderer.cpp",
   "PreviewInSolutionExplorer": false
 }

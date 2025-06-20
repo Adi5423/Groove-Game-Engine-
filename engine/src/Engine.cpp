@@ -58,7 +58,15 @@ void Engine::Run() {
     float logTimer = lastTime;
     bool cameraActive = true; // Track camera movement/rotation state
 
-    Groove::Transform cubeTransform;
+    Groove::Transform cube1;
+    Groove::Transform cube2;
+
+    // Set different positions and/or rotations
+    cube1.Position = glm::vec3(-1.5f, 0.0f, 0.0f); // Left
+    cube1.Rotation = glm::vec3(0.0f, 0.0f, 0.0f);
+
+    cube2.Position = glm::vec3(1.5f, 0.0f, 0.0f); // Right
+    cube2.Rotation = glm::vec3(0.0f, 45.0f, 0.0f); // Rotated 45° on Y
 
     GLFWwindow* glfwWin = static_cast<GLFWwindow*>(s_Window->GetNativeWindow());
     while (!glfwWindowShouldClose(glfwWin)) {
@@ -99,9 +107,22 @@ void Engine::Run() {
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f); // Set a dark gray background
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        cubeTransform.Rotation.y += deltaTime * 50.0f; // 50° per sec
+        // Animate both cubes (optional: rotate both)
+        cube1.Rotation.y += deltaTime * 50.0f;
+        cube2.Rotation.y -= deltaTime * 30.0f;
 
-        Groove::Renderer::DrawCube(cubeTransform, *m_Camera);
+        Groove::Renderer::DrawCube(cube1, *m_Camera);
+        Groove::Renderer::DrawCube(cube2, *m_Camera);
+
+        // Additional rendering of two more cubes
+        //Groove::Transform t1;
+        //t1.Position = glm::vec3(-1.0f, 0.0f, 0.0f); // left cube
+
+        //Groove::Transform t2;
+        //t2.Position = glm::vec3(1.0f, 0.0f, 0.0f);  // right cube
+
+        //Groove::Renderer::DrawCube(t1, *m_Camera);
+        //Groove::Renderer::DrawCube(t2, *m_Camera);
 
         s_ImGuiLayer->Begin();
 
@@ -126,7 +147,10 @@ void Engine::Run() {
                 << " | Camera Active: " << (cameraActive ? "Yes" : "No");
             Groove::Logger::Info(oss.str());
             oss.str("");
-            oss << "Cube Rotation Y: " << cubeTransform.Rotation.y;
+            oss << "Cube1 Rotation Y: " << cube1.Rotation.y;
+            Groove::Logger::Info(oss.str());
+            oss.str("");
+            oss << "Cube2 Rotation Y: " << cube2.Rotation.y;
             Groove::Logger::Info(oss.str());
         }
 

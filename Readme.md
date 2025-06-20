@@ -1,15 +1,25 @@
-﻿# ✨ Groove Game Engine
+﻿
+<h1 align="center">Groove Game Engine</h1>
 
-> **A next-gen modular C++ game engine**  
-> Built with OpenGL, GLFW, ImGui, and CMake.  
-> **Focus:** Realistic simulation, extensible core, and modern code.
+<p align="center">
+  <b>A next-gen modular C++ game engine</b><br/>
+  Built with OpenGL, GLFW, ImGui, and CMake.<br/>
+  <i>Realistic simulation • Extensible core • Modern code</i>
+</p>
+<p align="center">
+  <a href="#Platform"><img src="https://img.shields.io/badge/Platform-Windows%2010%2B-blue?logo=windows"/></a>
+  <a href="#Language"><img src="https://img.shields.io/badge/C%2B%2B-17-blue?logo=c%2B%2B"/></a>
+  <a href="#Build"><img src="https://img.shields.io/badge/CMake-3.21%2B-blue?logo=cmake"/></a>
+  <a href="#Graphics"><img src="https://img.shields.io/badge/OpenGL-4.6-green?logo=opengl"/></a>
+  <a href="#License"><img src="https://img.shields.io/badge/License-MIT-yellow?logo=license"/></a>
+</p>
 
 ---
 
 <div align="center">
   <img src="resources/proof1.png" width="400" alt="Groove Engine Screenshot" />
   <br>
-  <b>🚦 If you see a spinning 3D cube, you're ready to groove!</b>
+  <strong>🚦 If you see a spinning 3D cube, you're ready to groove!</strong>
 </div>
 
 ---
@@ -36,27 +46,27 @@ Groove/
 
 ## 🚀 Features
 
-| Subsystem         | Status | Highlights                                 |
-|-------------------|:------:|--------------------------------------------|
-| CMake Build       |   ✅   | Modular, multi-target                      |
-| Windowing         |   ✅   | GLFW, VSync, resize                        |
-| Input             |   ✅   | Keyboard, mouse, edge detection            |
-| Logging           |   ✅   | Color console, file logs                   |
-| Rendering         |   ✅   | OpenGL, VAO/VBO/IBO, shaders, 3D cube      |
-| ImGui UI          |   ✅   | Overlay, debug panels                      |
-| Delta Time        |   ✅   | TimeStep, smooth animation                 |
-| Next Up           |   🔲   | ECS, events, scene, vehicles, roads        |
+| Subsystem        | Status | Highlights                                 |
+| ---------------- | :----: | ------------------------------------------ |
+| 🛠️ Build System |    ✅   | CMake-based, modular targets               |
+| 🪟 Windowing     |    ✅   | GLFW, resizable, VSync toggle              |
+| 🎮 Input         |    ✅   | Keyboard/mouse support with edge detection |
+| 📜 Logging       |    ✅   | Color console, file logs                   |
+| 🖼️ Rendering    |    ✅   | OpenGL, VAO/VBO/IBO, shaders, 3D cube      |
+| 🧰 UI (ImGui)    |    ✅   | Overlay, debug panels                      |
+| ⏱️ Delta Time    |    ✅   | Smooth animations with TimeStep            |
+| 🧠 Next Features |   🔲   | ECS, events, scene, vehicles, roads        |
 
 ---
 
-## 🛠️ Requirements
+## 📦 Requirements
 
-- **C++17** or newer
-- **Visual Studio 2022** (Desktop C++)
-- **CMake 3.21+**
-- **vcpkg** (for dependencies)
+* **C++17** or newer
+* **Visual Studio 2022** (Desktop C++)
+* **CMake 3.21+**
+* **vcpkg** (for dependencies)
 
-```
+```bash
 vcpkg install glfw3 glad glm imgui[glfw-binding,opengl3-binding]
 ```
 
@@ -64,75 +74,88 @@ vcpkg install glfw3 glad glm imgui[glfw-binding,opengl3-binding]
 
 ## ⚡ Quick Start
 
-1. **Clone**
-```
-   git clone https://github.com/Adi5423/Groove-Game-Engine.git
-   cd Groove-Game-Engine
+### 1. Clone the Repo
+
+```bash
+git clone https://github.com/Adi5423/Groove-Game-Engine.git
+cd Groove-Game-Engine
 ```
 
-2. **Configure (CMake)**
-```
-   cmake -S . -B out/build/windows-debug -G "Visual Studio 17 2022" -A x64 ^
-     -DCMAKE_TOOLCHAIN_FILE="<VCPKG_PATH>/scripts/buildsystems/vcpkg.cmake"
+### 2. Configure with CMake
+
+```bash
+cmake -S . -B out/build/windows-debug -G "Visual Studio 17 2022" -A x64 ^
+  -DCMAKE_TOOLCHAIN_FILE="<VCPKG_PATH>/scripts/buildsystems/vcpkg.cmake"
 ```
 
-3. **Build**
-```
-   cmake --build out/build/windows-debug --config Debug
+### 3. Build the Engine
+
+```bash
+cmake --build out/build/windows-debug --config Debug
 ```
 
-4. **Run**
-```
-   ./out/build/windows-debug/sandbox/Sandbox.exe
+### 4. Run the Demo
 
+```bash
+./out/build/windows-debug/sandbox/Sandbox.exe
 ```
 
 ---
 
-## 🧩 Visual Studio Integration
 
-- Open the root folder in Visual Studio.
-- Edit and save any `CMakeLists.txt` to trigger CMake.
-- Build with `Ctrl+Shift+B` or __Build > Rebuild All__.
-- Run `Sandbox.exe` from the output directory.
+`or if you have the Visual Studio 2022 installaed follow this instead (VCPKG step is must , before this too)`
+
+## 🧩 Visual Studio Workflow
+
+* Open root folder in **Visual Studio 2022**
+* Update the Toolchain location for the VCPKG in file [CMakePresets.json](CMakePresets.json) at line 17 `"CMAKE_TOOLCHAIN_FILE"` location as where you installed the VCPKG 
+* Open any `CMakeLists.txt` and Save(Ctrl+S) to auto-trigger reconfigure
+* Build with `Ctrl+Shift+B` or **Build > Rebuild All**
+* Run `Sandbox.exe` from the output folder
 
 ---
 
 ## 🎮 Controls
 
-- **W/A/S/D**: Move camera
-- **Mouse**: Look around
-- **ESC**: Toggle camera/cursor
-- **Space/CTRL**: Move up/down
+| Action        | Key / Input      |
+| ------------- | ---------------- |
+| Move Forward  | `W`              |
+| Move Backward | `S`              |
+| Move Left     | `A`              |
+| Move Right    | `D`              |
+| Move Up       | `Space`          |
+| Move Down     | `Ctrl`           |
+| Look Around   | `Mouse Movement` |
+| Toggle Cursor | `ESC`            |
 
 ---
 
 ## 🖼️ Screenshots
 
-| Output         | Preview                         |
-|----------------|---------------------------------|
-| proof1.png     | ![proof1](resources/proof1.png) |
-| proof2.png  | ![proof2](resources/proof2.png) |
+| Output     | Preview                         |
+| ---------- | ------------------------------- |
+| proof1.png | ![proof1](resources/proof1.png) |
+| proof2.png | ![proof2](resources/proof2.png) |
 
 ---
 
 ## 🗺️ Roadmap
 
-- [x] Logging, Input, Window, Shaders, ImGui, 3D Cube
-- [ ] ECS, Events, Scene, Vehicles, Roads
+* [x] Logging, Input, Window, Shaders, ImGui, 3D Cube
+* [ ] ECS, Events, Scene System, Vehicles, Roads
 
 ---
 
 ## 📜 License
 
-MIT — see [`LICENSE.txt`](LICENSE.txt)
+Licensed under the **MIT License**. See [`LICENSE.txt`](LICENSE.txt).
 
 ---
 
 ## 📬 Contact
 
-- ✉️ [adii54ti23@gmail.com](mailto:adii54ti23@gmail.com)
-- 💼 [LinkedIn](https://www.linkedin.com/in/aditya-tiwari-141731329/)
-- 📸 [Instagram @adii5423_](https://www.instagram.com/adii5423_)
+* ✉️ [adii54ti23@gmail.com](mailto:adii54ti23@gmail.com)
+* 💼 [LinkedIn](https://www.linkedin.com/in/aditya-tiwari-141731329/)
+* 📸 [Instagram @adii5423\_](https://www.instagram.com/adii5423_)
 
-_Made with ❤️ by Adii_
+<p align="center"><i>Made with ❤️ by Adii</i></p>
