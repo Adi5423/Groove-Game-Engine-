@@ -58,33 +58,40 @@ Groove/
 
 * **C++17** or newer
 * **Visual Studio 2022** (Desktop C++)
-* **CMake 3.21+**
+* **CMake 3.21+** (tested with 3.31.6)
 * **vcpkg** (for dependencies)
-vcpkg install glfw3 glad glm imgui[glfw-binding,opengl3-binding]
+  - `vcpkg install glfw3 glad glm imgui[glfw-binding,opengl3-binding]`
 ---
 
 ## ⚡ Quick Start
 
 ### 1. Clone the Repo
+```
 git clone https://github.com/Adi5423/Groove-Game-Engine.git
 cd Groove-Game-Engine
+```
 ### 2. Configure with CMake
-cmake -S . -B out/build/windows-debug -G "Visual Studio 17 2022" -A x64 ^
-  -DCMAKE_TOOLCHAIN_FILE="<VCPKG_PATH>/scripts/buildsystems/vcpkg.cmake"
+```
+cmake -S . -B out/build/windows-debug -G "Ninja" -DCMAKE_TOOLCHAIN_FILE="<VCPKG_PATH>/scripts/buildsystems/vcpkg.cmake"
+```
 ### 3. Build the Engine
+```
 cmake --build out/build/windows-debug --config Debug
+```
 ### 4. Run the Demo
+```
 ./out/build/windows-debug/sandbox/Sandbox.exe
+
+```
 ---
 
-
-`or if you have the Visual Studio 2022 installaed follow this instead (VCPKG step is must , before this too)`
+`or if you have Visual Studio 2022 installed, follow this instead (VCPKG step is required before this):`
 
 ## 🧩 Visual Studio Workflow
 
 * Open root folder in **Visual Studio 2022**
-* Update the Toolchain location for the VCPKG in file [CMakePresets.json](CMakePresets.json) at line 17 `"CMAKE_TOOLCHAIN_FILE"` location as where you installed the VCPKG 
-* Open any `CMakeLists.txt` and Save(Ctrl+S) to auto-trigger reconfigure
+* Update the Toolchain location for VCPKG in [CMakePresets.json] at `"CMAKE_TOOLCHAIN_FILE"` to your VCPKG install path
+* Open any `CMakeLists.txt` and Save (Ctrl+S) to auto-trigger reconfigure
 * Build with `Ctrl+Shift+B` or **Build > Rebuild All**
 * Run `Sandbox.exe` from the output folder
 
@@ -98,10 +105,10 @@ cmake --build out/build/windows-debug --config Debug
 | Move Backward | `S`              |
 | Move Left     | `A`              |
 | Move Right    | `D`              |
-| Move Up       | `Space`          |
-| Move Down     | `Ctrl`           |
-| Look Around   | `Mouse Movement` |
-| Toggle Cursor | `ESC`            |
+| Move Up       | `Q`              |
+| Move Down     | `E`              |
+| Look Around   | `Mouse Movement` (hold RMB) |
+| Toggle Cursor | Always visible   |
 
 ---
 
@@ -168,3 +175,4 @@ Licensed under the **MIT License**. See [`LICENSE.txt`](LICENSE.txt).
 * 📸 [Instagram @adii5423\_](https://www.instagram.com/adii5423_)
 
 <p align="center"><i>Made with ❤️ by Adii</i></p>
+

@@ -10,7 +10,7 @@ add_library(Engine STATIC
     src/Camera.h 
     src/Camera.cpp 
     src/Transform.hpp
-)
+ "src/MousePicker.hpp")
 
 
 target_include_directories(Engine PUBLIC

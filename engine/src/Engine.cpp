@@ -9,18 +9,25 @@
 #include "../Renderer/ImGuiLayer.h"
 #include "Camera.h"
 #include "Transform.h"
+#include "MousePicker.hpp"
+#include "Intersection.hpp" // Added this to include RayIntersectsAABB
+#include <cfloat> // For FLT_MAX
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <imgui.h> // Ensure ImGui is included for ImGui::Begin/End/Text
 #include <sstream>
 #include <glm/gtc/type_ptr.hpp> // Include for glm::value_ptr
+#include <vector> // Required for std::vector
 
 static Groove::Window* s_Window = nullptr;
 static Groove::ImGuiLayer* s_ImGuiLayer = nullptr;
 
 // Updated: m_Camera as static at file-scope
 static Groove::Camera* m_Camera = nullptr;
+
+// Store transforms in a vector for picking (file-scope)
+static std::vector<Groove::Transform> m_Transforms;
 
 // Helper function to convert glm::vec3 to string
 static std::string Vec3ToString(const glm::vec3& vec) {
@@ -57,14 +64,17 @@ void Engine::Run() {
     float lastTime = (float)glfwGetTime();
     float logTimer = lastTime;
 
-    Groove::Transform cube1;
-    Groove::Transform cube2;
+    // Initialize transforms only once
+    if (m_Transforms.empty()) {
+        m_Transforms.push_back(Groove::Transform());
+        m_Transforms.push_back(Groove::Transform());
 
-    cube1.Position = glm::vec3(-1.5f, 0.0f, 0.0f); // Left
-    cube1.Rotation = glm::vec3(0.0f, 0.0f, 0.0f);
+        m_Transforms[0].Position = glm::vec3(-1.5f, 0.0f, 0.0f); // Left
+        m_Transforms[0].Rotation = glm::vec3(0.0f, 0.0f, 0.0f);
 
-    cube2.Position = glm::vec3(1.5f, 0.0f, 0.0f); // Right
-    cube2.Rotation = glm::vec3(0.0f, 45.0f, 0.0f); // Rotated 45° on Y
+        m_Transforms[1].Position = glm::vec3(1.5f, 0.0f, 0.0f); // Right
+        m_Transforms[1].Rotation = glm::vec3(0.0f, 45.0f, 0.0f);
+    }
 
     GLFWwindow* glfwWin = static_cast<GLFWwindow*>(s_Window->GetNativeWindow());
 
@@ -98,16 +108,68 @@ void Engine::Run() {
             Groove::Input::GetMouseDelta(dx, dy); // Consume delta
         }
 
+        // Mouse picking logic (after camera update, before rendering)
+#if __cplusplus >= 201703L
+        if (Groove::Input::IsMouseButtonPressed(GLFW_MOUSE_BUTTON_LEFT)) {
+            auto [origin, dir] = CastRayFromMouse(*m_Camera, *s_Window);
+            float closestT = FLT_MAX;
+            int hitIndex = -1;
+
+            for (int i = 0; i < (int)m_Transforms.size(); i++) {
+                const auto& T = m_Transforms[i];
+                glm::vec3 half = T.Scale * 0.5f;
+                glm::vec3 min = T.Position - half;
+                glm::vec3 max = T.Position + half;
+                float t;
+                if (RayIntersectsAABB(origin, dir, min, max, t) && t < closestT) {
+                    closestT = t;
+                    hitIndex = i;
+                }
+            }
+
+            if (hitIndex >= 0) {
+                Groove::Logger::Info("Clicked object #" + std::to_string(hitIndex));
+                // Optionally: store selection or highlight
+            }
+        }
+#else
+        // Fallback for pre-C++17: no structured bindings
+        if (Groove::Input::IsMouseButtonPressed(GLFW_MOUSE_BUTTON_LEFT)) {
+            auto ray = CastRayFromMouse(*m_Camera, *s_Window);
+            auto& origin = ray.first;
+            auto& dir = ray.second;
+            float closestT = FLT_MAX;
+            int hitIndex = -1;
+
+            for (int i = 0; i < (int)m_Transforms.size(); i++) {
+                const auto& T = m_Transforms[i];
+                glm::vec3 half = T.Scale * 0.5f;
+                glm::vec3 min = T.Position - half;
+                glm::vec3 max = T.Position + half;
+                float t;
+                if (Groove::RayIntersectsAABB(origin, dir, min, max, t) && t < closestT) {
+                    closestT = t;
+                    hitIndex = i;
+                }
+            }
+
+            if (hitIndex >= 0) {
+                Groove::Logger::Info("Clicked object #" + std::to_string(hitIndex));
+                // Optionally: store selection or highlight
+            }
+        }
+#endif
+
         // 3) Render
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f); // Set a dark gray background
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // Animate both cubes (optional: rotate both)
-        cube1.Rotation.y += deltaTime * 50.0f;
-        cube2.Rotation.y -= deltaTime * 30.0f;
+        m_Transforms[0].Rotation.y += deltaTime * 50.0f;
+        m_Transforms[1].Rotation.y -= deltaTime * 30.0f;
 
-        Groove::Renderer::DrawCube(cube1, *m_Camera);
-        Groove::Renderer::DrawCube(cube2, *m_Camera);
+        Groove::Renderer::DrawCube(m_Transforms[0], *m_Camera);
+        Groove::Renderer::DrawCube(m_Transforms[1], *m_Camera);
 
         s_ImGuiLayer->Begin();
 
@@ -132,10 +194,10 @@ void Engine::Run() {
                 << " | Camera Active: " << (rightMouseHeld ? "Yes" : "No");
             Groove::Logger::Info(oss.str());
             oss.str("");
-            oss << "Cube1 Rotation Y: " << cube1.Rotation.y;
+            oss << "Cube1 Rotation Y: " << m_Transforms[0].Rotation.y;
             Groove::Logger::Info(oss.str());
             oss.str("");
-            oss << "Cube2 Rotation Y: " << cube2.Rotation.y;
+            oss << "Cube2 Rotation Y: " << m_Transforms[1].Rotation.y;
             Groove::Logger::Info(oss.str());
         }
 

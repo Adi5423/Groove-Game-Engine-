@@ -43,6 +43,7 @@ namespace Groove {
         glfwSwapBuffers(m_Window);
     }
 
+
     void Window::Shutdown() {
         glfwDestroyWindow(m_Window);
         glfwTerminate();
