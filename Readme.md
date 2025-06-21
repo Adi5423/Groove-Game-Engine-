@@ -1,5 +1,4 @@
-﻿
-<h1 align="center">Groove Game Engine</h1>
+﻿<h1 align="center">Groove Game Engine</h1>
 
 <p align="center">
   <b>A next-gen modular C++ game engine</b><br/>
@@ -25,8 +24,6 @@
 ---
 
 ## 🗂️ Project Structure
-
-```text
 Groove/
 ├─ engine/         # Core engine modules
 │  ├─ Input/       # Input abstraction
@@ -40,8 +37,6 @@ Groove/
 ├─ README.md       # This file
 ├─ Detailed_Guide.md # Deep-dive technical guide
 └─ .gitignore
-```
-
 ---
 
 ## 🚀 Features
@@ -65,41 +60,21 @@ Groove/
 * **Visual Studio 2022** (Desktop C++)
 * **CMake 3.21+**
 * **vcpkg** (for dependencies)
-
-```bash
 vcpkg install glfw3 glad glm imgui[glfw-binding,opengl3-binding]
-```
-
 ---
 
 ## ⚡ Quick Start
 
 ### 1. Clone the Repo
-
-```bash
 git clone https://github.com/Adi5423/Groove-Game-Engine.git
 cd Groove-Game-Engine
-```
-
 ### 2. Configure with CMake
-
-```bash
 cmake -S . -B out/build/windows-debug -G "Visual Studio 17 2022" -A x64 ^
   -DCMAKE_TOOLCHAIN_FILE="<VCPKG_PATH>/scripts/buildsystems/vcpkg.cmake"
-```
-
 ### 3. Build the Engine
-
-```bash
 cmake --build out/build/windows-debug --config Debug
-```
-
 ### 4. Run the Demo
-
-```bash
 ./out/build/windows-debug/sandbox/Sandbox.exe
-```
-
 ---
 
 
@@ -127,6 +102,40 @@ cmake --build out/build/windows-debug --config Debug
 | Move Down     | `Ctrl`           |
 | Look Around   | `Mouse Movement` |
 | Toggle Cursor | `ESC`            |
+
+---
+
+## 🎮 Input & Camera System
+
+- **Input**: Abstracted for easy extension; supports polling and edge detection.
+- **Camera**:  
+  - **Movement**: Use `W`, `A`, `S`, `D` for forward/left/back/right movement.  
+  - **Vertical Movement**: Use `Q` to move up, `E` to move down.
+  - **Mouse Look**: Hold the **right mouse button** in the main game window to look around with the mouse.
+  - **Combined Movement**: Camera movement (WASDQE) and look are only active while the right mouse button is held.
+- **Cursor**: The mouse cursor is always visible and enabled; it is never locked or hidden.
+- **ESC**: No longer used for toggling camera or cursor modes.
+- **Mouse Delta**: Used for smooth, frame-rate-independent camera rotation, but only when the right mouse button is held.
+
+---
+
+## 🖥️ Engine Initialization & Main Loop
+
+### Initialization (`Engine::Init`)
+- Logger starts first to capture all events.
+- Window is created (GLFW), OpenGL context is set up (GLAD).
+- Input is initialized and hooked to the window.
+- Renderer is set up, including OpenGL state and resources.
+- Camera is created and positioned to view the scene.
+- ImGui Layer is initialized after OpenGL context is ready.
+- **Cursor is always visible for user interaction.**
+
+### Main Loop (`Engine::Run`)
+- Delta time is calculated each frame for smooth movement and animation.
+- Input is polled: **camera movement and look are only processed when the right mouse button is held**.
+- Scene is rendered: screen is cleared, cube is rotated and drawn, ImGui overlays are rendered.
+- Logging: Every second, camera and cube state are logged for debugging.
+- Window swaps buffers and polls events.
 
 ---
 
