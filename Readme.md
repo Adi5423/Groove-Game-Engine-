@@ -23,9 +23,7 @@
 
 ---
 
-## 🗂️ Project Structure
-```text
-Groove/
+## 🗂️ Project StructureGroove/
 ├─ engine/         # Core engine modules
 │  ├─ Input/       # Input abstraction
 │  ├─ Renderer/    # OpenGL, ImGui, shaders
@@ -37,9 +35,7 @@ Groove/
 ├─ LICENSE.txt     # MIT License
 ├─ README.md       # This file
 ├─ Detailed_Guide.md # Deep-dive technical guide
-└─ .gitignore
-```
----
+└─ .gitignore---
 
 ## 🚀 Features
 
@@ -67,24 +63,8 @@ Groove/
 
 ## ⚡ Quick Start
 
-### 1. Clone the Repo
-```
-git clone https://github.com/Adi5423/Groove-Game-Engine.git
-cd Groove-Game-Engine
-```
-### 2. Configure with CMake
-```
-cmake -S . -B out/build/windows-debug -G "Ninja" -DCMAKE_TOOLCHAIN_FILE="<VCPKG_PATH>/scripts/buildsystems/vcpkg.cmake"
-```
-### 3. Build the Engine
-```
-cmake --build out/build/windows-debug --config Debug
-```
-### 4. Run the Demo
-```
-./out/build/windows-debug/sandbox/Sandbox.exe
-
-```
+### 1. Clone the Repogit clone https://github.com/Adi5423/Groove-Game-Engine.git
+cd Groove-Game-Engine### 2. Configure with CMakecmake -S . -B out/build/windows-debug -G "Ninja" -DCMAKE_TOOLCHAIN_FILE="<VCPKG_PATH>/scripts/buildsystems/vcpkg.cmake"### 3. Build the Enginecmake --build out/build/windows-debug --config Debug### 4. Run the Demo./out/build/windows-debug/sandbox/Sandbox.exe
 ---
 
 `or if you have Visual Studio 2022 installed, follow this instead (VCPKG step is required before this):`
@@ -99,6 +79,10 @@ cmake --build out/build/windows-debug --config Debug
 
 ---
 
+[📖 **Read the Detailed Technical Guide**](Detailed_Guide.md)
+
+---
+
 ## 🎮 Controls
 
 | Action        | Key / Input      |
@@ -107,8 +91,8 @@ cmake --build out/build/windows-debug --config Debug
 | Move Backward | `S`              |
 | Move Left     | `A`              |
 | Move Right    | `D`              |
-| Move Up       | `Q`              |
-| Move Down     | `E`              |
+| Move Up       | `E`              |
+| Move Down     | `Q`              |
 | Look Around   | `Mouse Movement` (hold RMB) |
 | Toggle Cursor | Always visible   |
 

@@ -95,8 +95,8 @@ void Engine::Run() {
             if (Groove::Input::IsKeyPressed(GLFW_KEY_S)) direction.z -= 1.0f;
             if (Groove::Input::IsKeyPressed(GLFW_KEY_A)) direction.x -= 1.0f;
             if (Groove::Input::IsKeyPressed(GLFW_KEY_D)) direction.x += 1.0f;
-            if (Groove::Input::IsKeyPressed(GLFW_KEY_Q)) direction.y += 1.0f; // Up
-            if (Groove::Input::IsKeyPressed(GLFW_KEY_E)) direction.y -= 1.0f; // Down
+            if (Groove::Input::IsKeyPressed(GLFW_KEY_E)) direction.y += 1.0f; // Up
+            if (Groove::Input::IsKeyPressed(GLFW_KEY_Q)) direction.y -= 1.0f; // Down
             m_Camera->ProcessKeyboard(direction, deltaTime);
 
             double dx, dy;
