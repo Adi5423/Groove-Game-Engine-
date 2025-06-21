@@ -24,6 +24,7 @@
 ---
 
 ## 🗂️ Project Structure
+```text
 Groove/
 ├─ engine/         # Core engine modules
 │  ├─ Input/       # Input abstraction
@@ -37,6 +38,7 @@ Groove/
 ├─ README.md       # This file
 ├─ Detailed_Guide.md # Deep-dive technical guide
 └─ .gitignore
+```
 ---
 
 ## 🚀 Features
