@@ -56,12 +56,10 @@ void Engine::Run() {
 
     float lastTime = (float)glfwGetTime();
     float logTimer = lastTime;
-    bool cameraActive = true; // Track camera movement/rotation state
 
     Groove::Transform cube1;
     Groove::Transform cube2;
 
-    // Set different positions and/or rotations
     cube1.Position = glm::vec3(-1.5f, 0.0f, 0.0f); // Left
     cube1.Rotation = glm::vec3(0.0f, 0.0f, 0.0f);
 
@@ -69,38 +67,35 @@ void Engine::Run() {
     cube2.Rotation = glm::vec3(0.0f, 45.0f, 0.0f); // Rotated 45° on Y
 
     GLFWwindow* glfwWin = static_cast<GLFWwindow*>(s_Window->GetNativeWindow());
+
+    // Always show the cursor
+    glfwSetInputMode(glfwWin, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+
     while (!glfwWindowShouldClose(glfwWin)) {
         float currentTime = (float)glfwGetTime();
         float deltaTime = currentTime - lastTime;
         lastTime = currentTime;
 
-        // Toggle camera control and cursor on ESC key press (edge detection)
-        static bool escWasPressed = false;
-        bool escPressed = Groove::Input::IsKeyPressed(GLFW_KEY_ESCAPE);
-        if (escPressed && !escWasPressed) {
-            cameraActive = !cameraActive;
-            if (cameraActive) {
-                glfwSetInputMode(glfwWin, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-            } else {
-                glfwSetInputMode(glfwWin, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-            }
-        }
-        escWasPressed = escPressed;
+        // Only process camera movement/rotation if right mouse button is held
+        bool rightMouseHeld = Groove::Input::IsMouseButtonPressed(GLFW_MOUSE_BUTTON_RIGHT);
 
-        // Only process camera movement/rotation if cameraActive
-        if (cameraActive) {
+        if (rightMouseHeld) {
             glm::vec3 direction{0.0f};
             if (Groove::Input::IsKeyPressed(GLFW_KEY_W)) direction.z += 1.0f;
             if (Groove::Input::IsKeyPressed(GLFW_KEY_S)) direction.z -= 1.0f;
             if (Groove::Input::IsKeyPressed(GLFW_KEY_A)) direction.x -= 1.0f;
             if (Groove::Input::IsKeyPressed(GLFW_KEY_D)) direction.x += 1.0f;
-            if (Groove::Input::IsKeyPressed(GLFW_KEY_SPACE)) direction.y += 1.0f;
-            if (Groove::Input::IsKeyPressed(GLFW_KEY_LEFT_CONTROL)) direction.y -= 1.0f;
+            if (Groove::Input::IsKeyPressed(GLFW_KEY_Q)) direction.y += 1.0f; // Up
+            if (Groove::Input::IsKeyPressed(GLFW_KEY_E)) direction.y -= 1.0f; // Down
             m_Camera->ProcessKeyboard(direction, deltaTime);
 
             double dx, dy;
             Groove::Input::GetMouseDelta(dx, dy);
             m_Camera->ProcessMouseMovement((float)dx, (float)dy);
+        } else {
+            // Optionally, reset mouse delta so camera doesn't jump when RMB is pressed again
+            double dx, dy;
+            Groove::Input::GetMouseDelta(dx, dy); // Consume delta
         }
 
         // 3) Render
@@ -113,16 +108,6 @@ void Engine::Run() {
 
         Groove::Renderer::DrawCube(cube1, *m_Camera);
         Groove::Renderer::DrawCube(cube2, *m_Camera);
-
-        // Additional rendering of two more cubes
-        //Groove::Transform t1;
-        //t1.Position = glm::vec3(-1.0f, 0.0f, 0.0f); // left cube
-
-        //Groove::Transform t2;
-        //t2.Position = glm::vec3(1.0f, 0.0f, 0.0f);  // right cube
-
-        //Groove::Renderer::DrawCube(t1, *m_Camera);
-        //Groove::Renderer::DrawCube(t2, *m_Camera);
 
         s_ImGuiLayer->Begin();
 
@@ -144,7 +129,7 @@ void Engine::Run() {
             oss << "Camera Position: " << Vec3ToString(cameraPosition)
                 << " | Yaw: " << m_Camera->GetYaw()
                 << " | Pitch: " << m_Camera->GetPitch()
-                << " | Camera Active: " << (cameraActive ? "Yes" : "No");
+                << " | Camera Active: " << (rightMouseHeld ? "Yes" : "No");
             Groove::Logger::Info(oss.str());
             oss.str("");
             oss << "Cube1 Rotation Y: " << cube1.Rotation.y;
