@@ -1,0 +1,68 @@
+# Build artifacts
+build/
+out/
+bin/
+*.exe
+*.dll
+*.lib
+*.pdb
+*.obj
+
+# CMake files
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+install_manifest.txt
+
+# VS files
+*.vcxproj*
+*.sln
+*.user
+*.log
+*.tlog
+*.idb
+*.ipch
+*.opensdf
+*.sdf
+
+# VS Code & Visual Studio folders
+.vscode/
+.vs/
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# IntelliSense cache
+*.VC.db
+
+# Backup or temp files
+*~
+*.swp
+
+# Ignore common large files
+*.zip
+*.tar
+*.tar.gz
+*.7z
+*.rar
+*.iso
+*.img
+*.mp4
+*.mp3
+*.avi
+*.mov
+*.mkv
+*.wav
+*.flac
+*.psd
+*.blend
+*.bak
+*.tmp
+*.log
+
+# Ignore core dumps and crash reports
+core.*
+*.dmp
+*.crash
