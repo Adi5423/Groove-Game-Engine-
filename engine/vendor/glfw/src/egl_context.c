@@ -31,7 +31,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <assert.h>
-
+#include "egl_context.h"
 
 // Return a description of the specified EGL error
 //
