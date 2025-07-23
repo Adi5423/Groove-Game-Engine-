@@ -15,7 +15,7 @@ namespace Groove {
     static std::pair<glm::vec3, glm::vec3> CastRayFromMouse(Camera& cam, Window& window) {
         // 1) Get normalized device coords
         double mx, my;
-        window.GetNativeCursorPos(mx, my);
+        window.GetCursorPos(mx, my);
         int w = window.GetWidth(), h = window.GetHeight();
         float x = (2.0f * (float)mx) / w - 1.0f;
         float y = 1.0f - (2.0f * (float)my) / h;

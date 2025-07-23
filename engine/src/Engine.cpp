@@ -12,6 +12,9 @@
 #include "MousePicker.hpp"
 #include "Intersection.hpp" // Added this to include RayIntersectsAABB
 #include <cfloat> // For FLT_MAX
+#include "core/FileWriter.hpp" // Include FileWriter for logging+
+#include <ctime>
+#include "Events/Event.hpp" // Add this include to ensure the definition of Groove::Event is available
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -29,6 +32,9 @@ static Groove::Camera* m_Camera = nullptr;
 // Store transforms in a vector for picking (file-scope)
 static std::vector<Groove::Transform> m_Transforms;
 
+// File System
+namespace fs = Groove::Core;
+
 // Helper function to convert glm::vec3 to string
 static std::string Vec3ToString(const glm::vec3& vec) {
     std::ostringstream oss;
@@ -39,6 +45,24 @@ static std::string Vec3ToString(const glm::vec3& vec) {
 void Engine::Init() {
     Groove::Logger::Init("Groove.log");
     s_Window = new Groove::Window(1280, 720, "Groove Engine");
+
+    // Bind event callback
+    s_Window->SetEventCallback([](Groove::Event& e) {
+        Groove::Logger::Info("Event: " + e.ToString());
+    });
+
+    // file system.
+    std::time_t now = std::time(nullptr);
+    std::string timeStr = std::ctime(&now);
+    timeStr.pop_back(); // remove newline
+
+    fs::FileWriter::EnsureFilePath("Logs/boot_log.txt");
+    fs::FileWriter::WriteText("Logs/boot_log.txt", "Engine Initialized at: " + timeStr + "\n");
+
+    //std::string sessionFile = fs::FileWriter::GenerateTimestampedFilename("Logs/session", "txt");
+    //fs::FileWriter::WriteText(sessionFile, "Session started: " + timeStr + "\n");
+
+
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
         Groove::Logger::Error("Failed to initialize GLAD!");
         return;

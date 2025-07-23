@@ -1,7 +1,7 @@
 add_library(Engine STATIC
     src/Engine.cpp
     src/Window.cpp
-    "src/TimeStep.hpp"
+    src/TimeStep.hpp
     Utils/Logger.cpp
     Input/Input.cpp
     Renderer/Renderer.cpp
@@ -10,12 +10,15 @@ add_library(Engine STATIC
     src/Camera.cpp 
     src/Transform.hpp
     src/MousePicker.hpp
-    "src/FileSystem.cpp"
+    src/io/FileSystem.cpp
+    "src/core/FileWriter.cpp"
 )
 
 target_include_directories(Engine PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
     ${CMAKE_CURRENT_SOURCE_DIR}/src
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/io
+#    ${CMAKE_CURRENT_SOURCE_DIR}/src/io
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Events
     ${CMAKE_CURRENT_SOURCE_DIR}/Utils
     ${CMAKE_CURRENT_SOURCE_DIR}/Input
     ${CMAKE_CURRENT_SOURCE_DIR}/Renderer
@@ -34,7 +37,6 @@ add_library(imgui STATIC ${IMGUI_SRC})
 target_include_directories(imgui PUBLIC vendor/imgui vendor/imgui/backends)
 
 
-
 # Link everything
 target_link_libraries(Engine
     PUBLIC
@@ -43,3 +45,4 @@ target_link_libraries(Engine
         imgui
 )
 target_include_directories(Engine PUBLIC vendor/glm)
+
