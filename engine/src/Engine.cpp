@@ -7,12 +7,14 @@
 #include "../Utils/Logger.hpp"
 #include "../Input/input.hpp"
 #include "../Renderer/ImGuiLayer.hpp"
+#include "../UI/UIManager.hpp"
+#include "../UI/ExamplePanel.hpp"
+#include "../UI/Dockspace.hpp"
 #include "Camera.hpp"
 #include "Transform.hpp"
 #include "MousePicker.hpp"
 #include "Intersection.hpp" // Added this to include RayIntersectsAABB
 #include <cfloat> // For FLT_MAX
-#include "core/FileWriter.hpp" // Include FileWriter for logging+
 #include <ctime>
 #include "Events/Event.hpp" // Add this include to ensure the definition of Groove::Event is available
 
@@ -25,6 +27,7 @@
 
 static Groove::Window* s_Window = nullptr;
 static Groove::ImGuiLayer* s_ImGuiLayer = nullptr;
+static Groove::UIManager* s_UIManager = nullptr;
 
 // Updated: m_Camera as static at file-scope
 static Groove::Camera* m_Camera = nullptr;
@@ -33,7 +36,7 @@ static Groove::Camera* m_Camera = nullptr;
 static std::vector<Groove::Transform> m_Transforms;
 
 // File System
-namespace fs = Groove::Core;
+//namespace fs = Groove::Core;
 
 // Helper function to convert glm::vec3 to string
 static std::string Vec3ToString(const glm::vec3& vec) {
@@ -56,8 +59,8 @@ void Engine::Init() {
     std::string timeStr = std::ctime(&now);
     timeStr.pop_back(); // remove newline
 
-    fs::FileWriter::EnsureFilePath("Logs/boot_log.txt");
-    fs::FileWriter::WriteText("Logs/boot_log.txt", "Engine Initialized at: " + timeStr + "\n");
+    //fs::FileWriter::EnsureFilePath("Logs/boot_log.txt");
+    //fs::FileWriter::WriteText("Logs/boot_log.txt", "Engine Initialized at: " + timeStr + "\n");
 
     //std::string sessionFile = fs::FileWriter::GenerateTimestampedFilename("Logs/session", "txt");
     //fs::FileWriter::WriteText(sessionFile, "Session started: " + timeStr + "\n");
@@ -74,8 +77,12 @@ void Engine::Init() {
     m_Camera = new Groove::Camera(45.0f, 1280.0f / 720.0f, 0.1f, 100.0f);
     m_Camera->SetPosition(glm::vec3(0.0f, 0.0f, 3.0f)); // Move camera back so it can see the cube
 
-    s_ImGuiLayer = new Groove::ImGuiLayer();
-    s_ImGuiLayer->Init(static_cast<GLFWwindow*>(s_Window->GetNativeWindow()));
+
+    // GUI Levels
+	s_UIManager = new Groove::UIManager();
+	s_UIManager->RegisterPanel(std::make_shared<Groove::ExamplePanel>());
+    //s_ImGuiLayer = new Groove::ImGuiLayer();
+    //s_ImGuiLayer->Init(static_cast<GLFWwindow*>(s_Window->GetNativeWindow()));
 
     // Lock the cursor to the window
     GLFWwindow* glfwWin = static_cast<GLFWwindow*>(s_Window->GetNativeWindow());
@@ -195,13 +202,16 @@ void Engine::Run() {
         Groove::Renderer::DrawCube(m_Transforms[0], *m_Camera);
         Groove::Renderer::DrawCube(m_Transforms[1], *m_Camera);
 
-        s_ImGuiLayer->Begin();
+        // GUI levels
+        s_ImGuiLayer = new Groove::ImGuiLayer();
+        s_ImGuiLayer->Init(static_cast<GLFWwindow*>(s_Window->GetNativeWindow()));
 
-        ImGui::Begin("Groove Engine");
-        ImGui::Text("Hello from ImGui!");
-        ImGui::End();
+        s_UIManager = new Groove::UIManager();
+        // Register dockspace FIRST so others dock into it
+        s_UIManager->RegisterPanel(std::make_shared<Groove::Dockspace>());
+        s_UIManager->RegisterPanel(std::make_shared<Groove::ExamplePanel>());
+        // (You can add SceneHierarchyPanel/PropertiesPanel/StatsPanel next)
 
-        s_ImGuiLayer->End();
 
         // Improved logging: log camera and cube info every second
         if (currentTime - logTimer >= 1.0f) {
@@ -230,8 +240,9 @@ void Engine::Run() {
 }
 
 void Engine::Shutdown() {
-    s_ImGuiLayer->Shutdown();
-    delete s_ImGuiLayer;
+    //s_ImGuiLayer->Shutdown();
+    //delete s_ImGuiLayer;
+    delete s_UIManager;
     Groove::Renderer::Shutdown();
     delete s_Window;
     delete m_Camera; // Clean up camera
