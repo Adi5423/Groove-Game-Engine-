@@ -1,3 +1,4 @@
+# Engine library
 add_library(Engine STATIC
     src/Engine.cpp
     src/Window.cpp
@@ -11,7 +12,7 @@ add_library(Engine STATIC
     src/Transform.hpp
     src/MousePicker.hpp
 
-    # UI (all editor panels live in Engine, not in imgui lib)
+    # UI Panels
     UI/UIManager.cpp
     UI/Dockspace.cpp
     UI/SceneHierarchyPanel.cpp
@@ -20,6 +21,7 @@ add_library(Engine STATIC
     UI/ExamplePanel.cpp
 )
 
+# Public include paths for Engine
 target_include_directories(Engine PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include
     ${CMAKE_CURRENT_SOURCE_DIR}/src
@@ -27,22 +29,30 @@ target_include_directories(Engine PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/Utils
     ${CMAKE_CURRENT_SOURCE_DIR}/Input
     ${CMAKE_CURRENT_SOURCE_DIR}/Renderer
-    ${CMAKE_CURRENT_SOURCE_DIR}/UI       # <— add this
+    ${CMAKE_CURRENT_SOURCE_DIR}/UI
+    ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glm
+    ${CMAKE_CURRENT_SOURCE_DIR}/vendor/imgui
+    ${CMAKE_CURRENT_SOURCE_DIR}/vendor/imgui/backends
 )
 
 # Dependencies
 add_subdirectory(vendor/glad)
 add_subdirectory(vendor/glfw)
 
+# ImGui source files
 file(GLOB IMGUI_SRC
     vendor/imgui/*.cpp
     vendor/imgui/backends/imgui_impl_glfw.cpp
     vendor/imgui/backends/imgui_impl_opengl3.cpp
 )
 
-# Keep imgui clean (no UI/*.cpp here)
+# Build ImGui as a separate static lib
 add_library(imgui STATIC ${IMGUI_SRC})
-target_include_directories(imgui PUBLIC vendor/imgui vendor/imgui/backends)
+target_include_directories(imgui PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/vendor/imgui
+    ${CMAKE_CURRENT_SOURCE_DIR}/vendor/imgui/backends
+)
+target_link_libraries(imgui PUBLIC glfw)
 
+# Link everything into Engine
 target_link_libraries(Engine PUBLIC glad glfw imgui)
-target_include_directories(Engine PUBLIC vendor/glm)

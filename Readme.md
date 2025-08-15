@@ -69,15 +69,11 @@ cd Groove-Game-Engine
 ```
 ### 2. Configure with CMake
 ```bash
-cmake -S . -B out/build/windows-debug -G "Ninja" -DCMAKE_TOOLCHAIN_FILE="<VCPKG_PATH>/scripts/buildsystems/vcpkg.cmake"
+cmake -B build -S . -G Ninja
 ```
 ### 3. Build the Engine
-```
-cmake --build out/build/windows-debug --config Debug
-````
-### 4. Run the Demo
-```
-./out/build/windows-debug/sandbox/Sandbox.exe
+```bash
+cmake --build build --config Debug
 ```
 ---
 
