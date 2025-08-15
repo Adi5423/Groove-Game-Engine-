@@ -19,7 +19,8 @@ add_library(Engine STATIC
     UI/PropertiesPanel.cpp
     UI/StatsPanel.cpp
     UI/ExamplePanel.cpp
-)
+#    UI/UIPanel.cpp
+ "UI/UIPanel.cpp")
 
 # Public include paths for Engine
 target_include_directories(Engine PUBLIC
@@ -47,7 +48,7 @@ file(GLOB IMGUI_SRC
 )
 
 # Build ImGui as a separate static lib
-add_library(imgui STATIC ${IMGUI_SRC})
+add_library(imgui STATIC ${IMGUI_SRC} "UI/UIPanel.cpp")
 target_include_directories(imgui PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/vendor/imgui
     ${CMAKE_CURRENT_SOURCE_DIR}/vendor/imgui/backends

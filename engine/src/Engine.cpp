@@ -1,11 +1,10 @@
 ﻿// engine/src/Engine.cpp
-
 #include "Engine.hpp"
 #include "Window.hpp"
 #include "TimeStep.hpp"
 #include "../Renderer/Renderer.hpp"
 #include "../Utils/Logger.hpp"
-#include "../Input/input.hpp"
+#include "../Input/Input.hpp"
 #include "../Renderer/ImGuiLayer.hpp"
 #include "../UI/UIManager.hpp"
 #include "../UI/ExamplePanel.hpp"
@@ -13,35 +12,26 @@
 #include "Camera.hpp"
 #include "Transform.hpp"
 #include "MousePicker.hpp"
-#include "Intersection.hpp" // Added this to include RayIntersectsAABB
-#include <cfloat> // For FLT_MAX
+#include "Intersection.hpp"
+#include <cfloat>
 #include <ctime>
-#include "Events/Event.hpp" // Add this include to ensure the definition of Groove::Event is available
+#include "Events/Event.hpp"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include <imgui.h> // Ensure ImGui is included for ImGui::Begin/End/Text
+#include <imgui.h>
 #include <sstream>
-#include <glm/gtc/type_ptr.hpp> // Include for glm::value_ptr
-#include <vector> // Required for std::vector
+#include <glm/gtc/type_ptr.hpp>
+#include <vector>
 
 static Groove::Window* s_Window = nullptr;
 static Groove::ImGuiLayer* s_ImGuiLayer = nullptr;
 static Groove::UIManager* s_UIManager = nullptr;
-
-// Updated: m_Camera as static at file-scope
 static Groove::Camera* m_Camera = nullptr;
-
-// Store transforms in a vector for picking (file-scope)
 static std::vector<Groove::Transform> m_Transforms;
 
-// File System
-//namespace fs = Groove::Core;
-
-// Helper function to convert glm::vec3 to string
-static std::string Vec3ToString(const glm::vec3& vec) {
-    std::ostringstream oss;
-    oss << "(" << vec.x << ", " << vec.y << ", " << vec.z << ")";
+static std::string Vec3ToString(const glm::vec3& v) {
+    std::ostringstream oss; oss << "(" << v.x << ", " << v.y << ", " << v.z << ")";
     return oss.str();
 }
 
@@ -49,12 +39,10 @@ void Engine::Init() {
     Groove::Logger::Init("Groove.log");
     s_Window = new Groove::Window(1280, 720, "Groove Engine");
 
-    // Event callback logging
     s_Window->SetEventCallback([](Groove::Event& e) {
         Groove::Logger::Info("Event: " + e.ToString());
         });
 
-    // Init OpenGL loader
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
         Groove::Logger::Error("Failed to initialize GLAD!");
         return;
@@ -63,24 +51,24 @@ void Engine::Init() {
     Groove::Input::Init(static_cast<GLFWwindow*>(s_Window->GetNativeWindow()));
     Groove::Renderer::Init();
 
-    // Camera setup
+    // Camera
     m_Camera = new Groove::Camera(45.0f, 1280.0f / 720.0f, 0.1f, 100.0f);
     m_Camera->SetPosition({ 0.0f, 0.0f, 3.0f });
 
-    // ImGui setup (once)
+    // ImGui once
     s_ImGuiLayer = new Groove::ImGuiLayer();
     s_ImGuiLayer->Init(static_cast<GLFWwindow*>(s_Window->GetNativeWindow()));
 
-    // UIManager setup (once)
+    // UIManager once — register Dockspace FIRST (real instance, not null)
     s_UIManager = new Groove::UIManager();
     s_UIManager->RegisterPanel(std::make_shared<Groove::Dockspace>());
     s_UIManager->RegisterPanel(std::make_shared<Groove::ExamplePanel>());
 
-    // Lock cursor initially
+    // Initial cursor mode
     GLFWwindow* glfwWin = static_cast<GLFWwindow*>(s_Window->GetNativeWindow());
     glfwSetInputMode(glfwWin, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
-    // Initialize cube transforms
+    // Scene
     m_Transforms.resize(2);
     m_Transforms[0].Position = { -1.5f, 0.0f, 0.0f };
     m_Transforms[1].Position = { 1.5f, 0.0f, 0.0f };
@@ -97,13 +85,13 @@ void Engine::Run() {
     glfwSetInputMode(glfwWin, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 
     while (!glfwWindowShouldClose(glfwWin)) {
-        float currentTime = (float)glfwGetTime();
-        float deltaTime = currentTime - lastTime;
-        lastTime = currentTime;
+        float now = (float)glfwGetTime();
+        float dt = now - lastTime;
+        lastTime = now;
 
-        // Camera controls
-        bool rightMouseHeld = Groove::Input::IsMouseButtonPressed(GLFW_MOUSE_BUTTON_RIGHT);
-        if (rightMouseHeld) {
+        // Camera controls (RMB)
+        bool rmb = Groove::Input::IsMouseButtonPressed(GLFW_MOUSE_BUTTON_RIGHT);
+        if (rmb) {
             glm::vec3 dir{};
             if (Groove::Input::IsKeyPressed(GLFW_KEY_W)) dir.z += 1.0f;
             if (Groove::Input::IsKeyPressed(GLFW_KEY_S)) dir.z -= 1.0f;
@@ -111,62 +99,57 @@ void Engine::Run() {
             if (Groove::Input::IsKeyPressed(GLFW_KEY_D)) dir.x += 1.0f;
             if (Groove::Input::IsKeyPressed(GLFW_KEY_E)) dir.y += 1.0f;
             if (Groove::Input::IsKeyPressed(GLFW_KEY_Q)) dir.y -= 1.0f;
-            m_Camera->ProcessKeyboard(dir, deltaTime);
+            m_Camera->ProcessKeyboard(dir, dt);
 
             double dx, dy;
             Groove::Input::GetMouseDelta(dx, dy);
             m_Camera->ProcessMouseMovement((float)dx, (float)dy);
         }
         else {
-            double dx, dy;
-            Groove::Input::GetMouseDelta(dx, dy); // consume delta
+            double dx, dy; Groove::Input::GetMouseDelta(dx, dy); // consume
         }
 
-        // Mouse picking (simplified)
 #if __cplusplus >= 201703L
         if (Groove::Input::IsMouseButtonPressed(GLFW_MOUSE_BUTTON_LEFT)) {
             auto [origin, dir] = CastRayFromMouse(*m_Camera, *s_Window);
-            float closestT = FLT_MAX;
-            int hitIndex = -1;
-
-            for (int i = 0; i < (int)m_Transforms.size(); i++) {
+            float closestT = FLT_MAX; int hit = -1;
+            for (int i = 0; i < (int)m_Transforms.size(); ++i) {
                 const auto& T = m_Transforms[i];
                 glm::vec3 half = T.Scale * 0.5f;
-                glm::vec3 min = T.Position - half;
-                glm::vec3 max = T.Position + half;
+                glm::vec3 mn = T.Position - half, mx = T.Position + half;
                 float t;
-                if (Groove::RayIntersectsAABB(origin, dir, min, max, t) && t < closestT) {
-                    closestT = t;
-                    hitIndex = i;
-                }
+                if (Groove::RayIntersectsAABB(origin, dir, mn, mx, t) && t < closestT) { closestT = t; hit = i; }
             }
-
-            if (hitIndex >= 0) {
-                Groove::Logger::Info("Clicked object #" + std::to_string(hitIndex));
-            }
+            if (hit >= 0) Groove::Logger::Info("Clicked object #" + std::to_string(hit));
         }
 #endif
 
-        // Clear screen
+        // Keep GL viewport + camera aspect in sync with framebuffer
+        int fbw = 0, fbh = 0;
+        glfwGetFramebufferSize(glfwWin, &fbw, &fbh);
+        if (fbw > 0 && fbh > 0) {
+            glViewport(0, 0, fbw, fbh);
+            Groove::Renderer::SetCameraPerspective(*m_Camera, (float)fbw / (float)fbh);
+        }
+
+        // 1) Clear & render scene (shows through dockspace central area)
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        // Rotate cubes
-        m_Transforms[0].Rotation.y += deltaTime * 50.0f;
-        m_Transforms[1].Rotation.y -= deltaTime * 30.0f;
+        m_Transforms[0].Rotation.y += dt * 50.0f;
+        m_Transforms[1].Rotation.y -= dt * 30.0f;
 
-        // Render scene
         Groove::Renderer::DrawCube(m_Transforms[0], *m_Camera);
         Groove::Renderer::DrawCube(m_Transforms[1], *m_Camera);
 
-        // ImGui
+        // 2) ImGui pass
         s_ImGuiLayer->Begin();
-        s_UIManager->RenderPanels();
+        s_UIManager->RenderPanels();     // Dockspace first (UIManager ensures order)
         s_ImGuiLayer->End();
 
-        // Logging every second
-        if (currentTime - logTimer >= 1.0f) {
-            logTimer = currentTime;
+        // Periodic logs
+        if (now - logTimer >= 1.0f) {
+            logTimer = now;
             glm::vec3 camPos(
                 m_Camera->GetViewMatrix()[3].x,
                 m_Camera->GetViewMatrix()[3].y,
@@ -176,13 +159,10 @@ void Engine::Run() {
                 "Camera Pos: " + Vec3ToString(camPos) +
                 " | Yaw: " + std::to_string(m_Camera->GetYaw()) +
                 " | Pitch: " + std::to_string(m_Camera->GetPitch()) +
-                " | Camera Active: " + std::string(rightMouseHeld ? "Yes" : "No")
+                " | Camera Active: " + std::string(rmb ? "Yes" : "No")
             );
-            Groove::Logger::Info("Cube1 Rot Y: " + std::to_string(m_Transforms[0].Rotation.y));
-            Groove::Logger::Info("Cube2 Rot Y: " + std::to_string(m_Transforms[1].Rotation.y));
         }
 
-        // Swap buffers & poll events
         s_Window->OnUpdate();
     }
 }

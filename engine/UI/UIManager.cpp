@@ -1,15 +1,20 @@
+// UIManager.cpp
 #include "UIManager.hpp"
-#include <imgui.h>
+#include <typeinfo>
 
 namespace Groove {
 
     void UIManager::RegisterPanel(std::shared_ptr<UIPanel> panel) {
-        m_Panels.push_back(panel);
+        if (panel) m_Panels.push_back(panel);
     }
 
     void UIManager::RenderPanels() {
-        for (auto& panel : m_Panels)
-            panel->OnImGuiRender();
+        // Render Dockspace (if any) first, then the rest
+        for (auto& p : m_Panels) {
+            // heuristic: render the first one if it was registered first (Dockspace),
+            // but to be safe we just render all in order
+            p->OnImGuiRender();
+        }
     }
 
 }
