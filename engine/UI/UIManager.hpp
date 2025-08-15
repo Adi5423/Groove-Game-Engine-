@@ -2,15 +2,9 @@
 #pragma once
 #include <vector>
 #include <memory>
+#include "UIPanel.hpp"
 
 namespace Groove {
-
-    class UIPanel {
-    public:
-        explicit UIPanel(const char* /*name*/ = "") {}
-        virtual ~UIPanel() = default;
-        virtual void OnImGuiRender() = 0;
-    };
 
     class UIManager {
     public:

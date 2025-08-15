@@ -1,26 +1,34 @@
 # Engine library
 add_library(Engine STATIC
+    
+    # Source files
     src/Engine.cpp
     src/Window.cpp
     src/TimeStep.hpp
-    Utils/Logger.cpp
-    Input/Input.cpp
-    Renderer/Renderer.cpp
-    Renderer/Shader.cpp
-    Renderer/ImGuiLayer.cpp
     src/Camera.cpp
     src/Transform.hpp
     src/MousePicker.hpp
+    
+    # Rendering and Graphics
+    Renderer/Renderer.cpp
+    Renderer/Shader.cpp
+    Renderer/ImGuiLayer.cpp
+    Renderer/Framebuffer.cpp
+
+    # Features 
+    Input/Input.cpp
+    Utils/Logger.cpp
 
     # UI Panels
     UI/UIManager.cpp
     UI/Dockspace.cpp
-    UI/SceneHierarchyPanel.cpp
-    UI/PropertiesPanel.cpp
-    UI/StatsPanel.cpp
     UI/ExamplePanel.cpp
-#    UI/UIPanel.cpp
- "UI/UIPanel.cpp")
+    UI/UIPanel.cpp 
+    UI/DefaultWindow.cpp 
+    UI/PrimaryWindow.cpp 
+    UI/SceneLoad.cpp
+
+)
 
 # Public include paths for Engine
 target_include_directories(Engine PUBLIC
@@ -48,7 +56,7 @@ file(GLOB IMGUI_SRC
 )
 
 # Build ImGui as a separate static lib
-add_library(imgui STATIC ${IMGUI_SRC} "UI/UIPanel.cpp")
+add_library(imgui STATIC ${IMGUI_SRC} )
 target_include_directories(imgui PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/vendor/imgui
     ${CMAKE_CURRENT_SOURCE_DIR}/vendor/imgui/backends
