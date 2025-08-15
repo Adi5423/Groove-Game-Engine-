@@ -1,15 +1,10 @@
 #include "SceneLoad.hpp"
-#include "../Renderer/Renderer.hpp"
 #include "../Renderer/Framebuffer.hpp"
 #include "../Utils/Logger.hpp"
 #include "../Input/Input.hpp"
-#include "../src/Window.hpp"
-#include "../src/TimeStep.hpp"
-#include "../src/Transform.hpp"
 #include "../src/Camera.hpp"
-#include "../src/MousePicker.hpp"
-#include "../src/Intersection.hpp"
-
+#include "../src/Transform.hpp"
+#include "../Renderer/Renderer.hpp"   // For DrawCube / SetCameraPerspective
 #include <imgui.h>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -18,15 +13,15 @@
 namespace Groove {
 
     std::unique_ptr<Camera> SceneLoad::s_Camera;
+    std::unique_ptr<Framebuffer> SceneLoad::s_Framebuffer;
     std::vector<Transform> SceneLoad::s_Transforms;
-    uint32_t SceneLoad::s_Framebuffer = 0;
     int SceneLoad::s_ViewportWidth = 1280;
     int SceneLoad::s_ViewportHeight = 720;
     bool SceneLoad::s_ViewportFocused = false;
     bool SceneLoad::s_ViewportHovered = false;
 
     void SceneLoad::Init() {
-        s_Camera = std::make_unique<Camera>(45.0f, (float)s_ViewportWidth / s_ViewportHeight, 0.1f, 100.0f);
+        s_Camera = std::make_unique<Camera>(45.0f, (float)s_ViewportWidth / (float)s_ViewportHeight, 0.1f, 100.0f);
         s_Camera->SetPosition({ 0.0f, 0.0f, 3.0f });
 
         s_Transforms.resize(2);
@@ -34,30 +29,23 @@ namespace Groove {
         s_Transforms[1].Position = { 1.5f, 0.0f, 0.0f };
         s_Transforms[1].Rotation = { 0.0f, 45.0f, 0.0f };
 
-        s_Framebuffer = Framebuffer::Create(s_ViewportWidth, s_ViewportHeight);
-
-        Logger::Info("SceneLoad initialized.");
+        s_Framebuffer = std::make_unique<Framebuffer>();
+        if (!s_Framebuffer->Create(s_ViewportWidth, s_ViewportHeight)) {
+            Logger::Error("SceneLoad: Failed to create framebuffer");
+        }
+        else {
+            Logger::Info("SceneLoad initialized.");
+        }
     }
 
     void SceneLoad::Shutdown() {
-        if (s_Framebuffer)
-            glDeleteFramebuffers(1, &s_Framebuffer);
+        s_Framebuffer.reset();
         s_Camera.reset();
         s_Transforms.clear();
     }
 
-    void SceneLoad::ResizeFramebuffer(int width, int height) {
-        if (width > 0 && height > 0 &&
-            (width != s_ViewportWidth || height != s_ViewportHeight)) {
-            s_ViewportWidth = width;
-            s_ViewportHeight = height;
-            Framebuffer::Resize(s_Framebuffer, width, height);
-            s_Camera->SetAspectRatio((float)width / height);
-        }
-    }
-
     void SceneLoad::Update(float dt) {
-        // Camera controls
+        // Camera controls only when viewport has focus and is hovered
         if (s_ViewportFocused && s_ViewportHovered && Input::IsMouseButtonPressed(GLFW_MOUSE_BUTTON_RIGHT)) {
             glm::vec3 dir{};
             if (Input::IsKeyPressed(GLFW_KEY_W)) dir.z += 1.0f;
@@ -73,22 +61,34 @@ namespace Groove {
             s_Camera->ProcessMouseMovement((float)dx, (float)dy);
         }
 
-        // Animate scene objects
-        s_Transforms[0].Rotation.y += dt * 50.0f;
-        s_Transforms[1].Rotation.y -= dt * 30.0f;
+        // Animate transforms
+        if (s_Transforms.size() >= 2) {
+            s_Transforms[0].Rotation.y += dt * 50.0f;
+            s_Transforms[1].Rotation.y -= dt * 30.0f;
+        }
     }
 
-    void SceneLoad::RenderScene() {
-        Framebuffer::Bind(s_Framebuffer);
-        glViewport(0, 0, s_ViewportWidth, s_ViewportHeight);
+    void SceneLoad::RenderSceneToFramebuffer() {
+        if (!s_Framebuffer) return;
+
+        s_Framebuffer->Bind();
+
+        // Set viewport to texture size
+        glViewport(0, 0, s_Framebuffer->GetWidth(), s_Framebuffer->GetHeight());
         glEnable(GL_DEPTH_TEST);
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        Renderer::SetCameraPerspective(*s_Camera, (float)s_ViewportWidth / s_ViewportHeight);
-        Renderer::DrawCube(s_Transforms[0], *s_Camera);
-        Renderer::DrawCube(s_Transforms[1], *s_Camera);
+        // ensure renderer uses camera projection (we pass camera into SetCameraPerspective which should call glUniformMatrix or similar)
+        Renderer::SetCameraPerspective(*s_Camera, (float)s_Framebuffer->GetWidth() / (float)s_Framebuffer->GetHeight());
 
+        // Draw scene objects using your existing Renderer
+        if (s_Transforms.size() >= 2) {
+            Renderer::DrawCube(s_Transforms[0], *s_Camera);
+            Renderer::DrawCube(s_Transforms[1], *s_Camera);
+        }
+
+        // Unbind back to default framebuffer
         Framebuffer::Unbind();
     }
 
@@ -99,13 +99,26 @@ namespace Groove {
         s_ViewportFocused = ImGui::IsWindowFocused();
         s_ViewportHovered = ImGui::IsWindowHovered();
 
-        ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
-        ResizeFramebuffer((int)viewportPanelSize.x, (int)viewportPanelSize.y);
+        ImVec2 avail = ImGui::GetContentRegionAvail();
+        int newW = (int)avail.x;
+        int newH = (int)avail.y;
 
-        RenderScene();
+        if (newW <= 0) newW = 1;
+        if (newH <= 0) newH = 1;
 
-        uint32_t textureID = Framebuffer::GetColorAttachment(s_Framebuffer);
-        ImGui::Image((void*)(intptr_t)textureID, viewportPanelSize, ImVec2(0, 1), ImVec2(1, 0));
+        if (!s_Framebuffer || newW != s_Framebuffer->GetWidth() || newH != s_Framebuffer->GetHeight()) {
+            // Recreate / resize framebuffer and update camera aspect
+            if (!s_Framebuffer) s_Framebuffer = std::make_unique<Framebuffer>();
+            s_Framebuffer->Resize(newW, newH);
+            s_Camera->SetAspectRatio((float)newW / (float)newH);
+        }
+
+        // Render scene into the framebuffer
+        RenderSceneToFramebuffer();
+
+        // Now draw the framebuffer texture to ImGui
+        uint32_t texId = s_Framebuffer ? s_Framebuffer->GetColorTexture() : 0u;
+        ImGui::Image((void*)(intptr_t)texId, avail, ImVec2(0, 1), ImVec2(1, 0));
 
         ImGui::End();
         ImGui::PopStyleVar();
