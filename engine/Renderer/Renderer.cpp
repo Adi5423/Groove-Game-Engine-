@@ -1,8 +1,8 @@
 #include "Renderer.h"
+#include <glad/glad.h>
 #include "../src/Transform.hpp"
 #include "Shader.h"
 #include "../Utils/Logger.h"
-#include <glad/glad.h>
 //#include <Transform.h>
 #include <Camera.h>
 

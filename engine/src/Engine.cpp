@@ -121,7 +121,7 @@ void Engine::Run() {
                 glm::vec3 min = T.Position - half;
                 glm::vec3 max = T.Position + half;
                 float t;
-                if (RayIntersectsAABB(origin, dir, min, max, t) && t < closestT) {
+                if (Groove::RayIntersectsAABB(origin, dir, min, max, t) && t < closestT) {
                     closestT = t;
                     hitIndex = i;
                 }

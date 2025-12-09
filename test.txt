@@ -276,3 +276,8 @@ void Engine::Shutdown() {
 }
 ```
 
+
+
+
+Severity	Code	Description	Project	File	Line	Suppression State	Details
+Error	C1189	#error:  OpenGL header already included, remove this include, glad already provides it	D:\Programming\C_Level\C++\Game_Engine_Dev\trial_one\Groove - Copy_Final\out\build\Configure preset using toolchain file\Groove - Copy_Final	D:\Programming\C_Level\C++\Game_Engine_Dev\trial_one\Groove - Copy_Final\engine\vendor\glad\include\glad\glad.h	27		

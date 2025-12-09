@@ -64,7 +64,21 @@
 ## ⚡ Quick Start
 
 ### 1. Clone the Repogit clone https://github.com/Adi5423/Groove-Game-Engine.git
-cd Groove-Game-Engine### 2. Configure with CMakecmake -S . -B out/build/windows-debug -G "Ninja" -DCMAKE_TOOLCHAIN_FILE="<VCPKG_PATH>/scripts/buildsystems/vcpkg.cmake"### 3. Build the Enginecmake --build out/build/windows-debug --config Debug### 4. Run the Demo./out/build/windows-debug/sandbox/Sandbox.exe
+```bash
+cd Groove-Game-Engine
+```
+### 2. Configure with CMake
+```bash
+cmake -S . -B out/build/windows-debug -G "Ninja" -DCMAKE_TOOLCHAIN_FILE="<VCPKG_PATH>/scripts/buildsystems/vcpkg.cmake"
+```
+### 3. Build the Engine
+```bash
+cmake --build out/build/windows-debug --config Debug
+```
+### 4. Run the Demo
+```bash
+./out/build/windows-debug/sandbox/Sandbox.exe
+```
 ---
 
 `or if you have Visual Studio 2022 installed, follow this instead (VCPKG step is required before this):`

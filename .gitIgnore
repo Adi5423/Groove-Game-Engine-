@@ -40,3 +40,29 @@ Thumbs.db
 # Backup or temp files
 *~
 *.swp
+
+# Ignore common large files
+*.zip
+*.tar
+*.tar.gz
+*.7z
+*.rar
+*.iso
+*.img
+*.mp4
+*.mp3
+*.avi
+*.mov
+*.mkv
+*.wav
+*.flac
+*.psd
+*.blend
+*.bak
+*.tmp
+*.log
+
+# Ignore core dumps and crash reports
+core.*
+*.dmp
+*.crash

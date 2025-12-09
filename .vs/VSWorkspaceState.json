@@ -12,13 +12,7 @@
   "ExpandedNodes": [
     "",
     "\\engine",
-    "\\engine\\Input",
-    "\\engine\\Renderer",
-    "\\engine\\src",
-    "\\engine\\Utils",
-    "\\sandbox",
-    "\\sandbox\\src"
+    "\\engine\\vendor"
   ],
-  "SelectedNode": "\\CMakeLists.txt",
   "PreviewInSolutionExplorer": false
 }

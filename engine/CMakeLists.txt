@@ -1,17 +1,16 @@
 add_library(Engine STATIC
     src/Engine.cpp
     src/Window.cpp
-    src/TimeStep.h        # header only, optional to list
+    src/TimeStep.h
     Utils/Logger.cpp
     Input/Input.cpp
     Renderer/Renderer.cpp
     Renderer/Shader.cpp
     Renderer/ImGuiLayer.cpp
-    src/Camera.h 
     src/Camera.cpp 
     src/Transform.hpp
- "src/MousePicker.hpp")
-
+    src/MousePicker.hpp
+)
 
 target_include_directories(Engine PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/src
@@ -20,15 +19,25 @@ target_include_directories(Engine PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/Renderer
 )
 
-find_package(glfw3 CONFIG REQUIRED)
-find_package(glad CONFIG REQUIRED)
-find_package(glm CONFIG REQUIRED)
-find_package(imgui CONFIG REQUIRED)
+# Dependencies
+add_subdirectory(vendor/glad) # <-- Use CMakeLists.txt inside glad
+add_subdirectory(vendor/glfw)
 
+file(GLOB IMGUI_SRC
+    vendor/imgui/*.cpp
+    vendor/imgui/backends/imgui_impl_glfw.cpp
+    vendor/imgui/backends/imgui_impl_opengl3.cpp
+)
+add_library(imgui STATIC ${IMGUI_SRC})
+target_include_directories(imgui PUBLIC vendor/imgui vendor/imgui/backends)
+
+
+
+# Link everything
 target_link_libraries(Engine
     PUBLIC
+        glad
         glfw
-        glad::glad
-        glm::glm
-        imgui::imgui
+        imgui
 )
+target_include_directories(Engine PUBLIC vendor/glm)
