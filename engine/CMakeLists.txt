@@ -27,9 +27,10 @@ file(GLOB IMGUI_SRC
     vendor/imgui/*.cpp
     vendor/imgui/backends/imgui_impl_glfw.cpp
     vendor/imgui/backends/imgui_impl_opengl3.cpp
+    vendor/ImGuizmo/ImGuizmo.cpp
 )
 add_library(imgui STATIC ${IMGUI_SRC})
-target_include_directories(imgui PUBLIC vendor/imgui vendor/imgui/backends)
+target_include_directories(imgui PUBLIC vendor/imgui vendor/imgui/backends vendor/ImGuizmo)
 
 
 

@@ -7,3 +7,6 @@
 [submodule "engine/vendor/imgui"]
 	path = engine/vendor/imgui
 	url = https://github.com/ocornut/imgui
+[submodule "engine/vendor/ImGuizmo"]
+	path = engine/vendor/ImGuizmo
+	url = https://github.com/CedricGuillemet/ImGuizmo.git

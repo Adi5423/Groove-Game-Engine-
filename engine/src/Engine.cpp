@@ -16,8 +16,10 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <imgui.h> // Ensure ImGui is included for ImGui::Begin/End/Text
+#include <ImGuizmo.h> // ImGuizmo for 3D gizmos
 #include <sstream>
 #include <glm/gtc/type_ptr.hpp> // Include for glm::value_ptr
+#include <glm/gtx/matrix_decompose.hpp> // For decomposing matrices
 #include <vector> // Required for std::vector
 
 static Groove::Window* s_Window = nullptr;
@@ -28,6 +30,12 @@ static Groove::Camera* m_Camera = nullptr;
 
 // Store transforms in a vector for picking (file-scope)
 static std::vector<Groove::Transform> m_Transforms;
+
+// Selection and gizmo state
+static int s_SelectedIndex = -1; // -1 means no selection
+static ImGuizmo::OPERATION s_CurrentGizmoOperation = ImGuizmo::TRANSLATE;
+static ImGuizmo::MODE s_CurrentGizmoMode = ImGuizmo::LOCAL;
+static bool s_WasLeftClickPressed = false; // For click-once detection
 
 // Helper function to convert glm::vec3 to string
 static std::string Vec3ToString(const glm::vec3& vec) {
@@ -106,38 +114,33 @@ void Engine::Run() {
             // Optionally, reset mouse delta so camera doesn't jump when RMB is pressed again
             double dx, dy;
             Groove::Input::GetMouseDelta(dx, dy); // Consume delta
+            
+            // Keyboard shortcuts for gizmo modes (only when not moving camera)
+            if (Groove::Input::IsKeyPressed(GLFW_KEY_W) && s_SelectedIndex >= 0) {
+                s_CurrentGizmoOperation = ImGuizmo::TRANSLATE;
+            }
+            if (Groove::Input::IsKeyPressed(GLFW_KEY_E) && s_SelectedIndex >= 0) {
+                s_CurrentGizmoOperation = ImGuizmo::ROTATE;
+            }
+            if (Groove::Input::IsKeyPressed(GLFW_KEY_R) && s_SelectedIndex >= 0) {
+                s_CurrentGizmoOperation = ImGuizmo::SCALE;
+            }
         }
 
-        // Mouse picking logic (after camera update, before rendering)
+        // Mouse picking logic - click once to select/deselect
+        bool leftClickNow = Groove::Input::IsMouseButtonPressed(GLFW_MOUSE_BUTTON_LEFT);
+        bool leftClickJustPressed = leftClickNow && !s_WasLeftClickPressed;
+        s_WasLeftClickPressed = leftClickNow;
+
+        // Only process selection if we just clicked AND gizmo is not being used
+        if (leftClickJustPressed && !ImGuizmo::IsOver()) {
 #if __cplusplus >= 201703L
-        if (Groove::Input::IsMouseButtonPressed(GLFW_MOUSE_BUTTON_LEFT)) {
             auto [origin, dir] = CastRayFromMouse(*m_Camera, *s_Window);
-            float closestT = FLT_MAX;
-            int hitIndex = -1;
-
-            for (int i = 0; i < (int)m_Transforms.size(); i++) {
-                const auto& T = m_Transforms[i];
-                glm::vec3 half = T.Scale * 0.5f;
-                glm::vec3 min = T.Position - half;
-                glm::vec3 max = T.Position + half;
-                float t;
-                if (Groove::RayIntersectsAABB(origin, dir, min, max, t) && t < closestT) {
-                    closestT = t;
-                    hitIndex = i;
-                }
-            }
-
-            if (hitIndex >= 0) {
-                Groove::Logger::Info("Clicked object #" + std::to_string(hitIndex));
-                // Optionally: store selection or highlight
-            }
-        }
 #else
-        // Fallback for pre-C++17: no structured bindings
-        if (Groove::Input::IsMouseButtonPressed(GLFW_MOUSE_BUTTON_LEFT)) {
             auto ray = CastRayFromMouse(*m_Camera, *s_Window);
             auto& origin = ray.first;
             auto& dir = ray.second;
+#endif
             float closestT = FLT_MAX;
             int hitIndex = -1;
 
@@ -154,27 +157,103 @@ void Engine::Run() {
             }
 
             if (hitIndex >= 0) {
-                Groove::Logger::Info("Clicked object #" + std::to_string(hitIndex));
-                // Optionally: store selection or highlight
+                // Select the clicked object
+                s_SelectedIndex = hitIndex;
+                Groove::Logger::Info("Selected object #" + std::to_string(hitIndex));
+            } else {
+                // Clicked empty space - deselect
+                if (s_SelectedIndex >= 0) {
+                    Groove::Logger::Info("Deselected object");
+                }
+                s_SelectedIndex = -1;
             }
         }
-#endif
 
         // 3) Render
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f); // Set a dark gray background
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        // Animate both cubes (optional: rotate both)
-        m_Transforms[0].Rotation.y += deltaTime * 50.0f;
-        m_Transforms[1].Rotation.y -= deltaTime * 30.0f;
+        // Only animate cubes that are NOT selected (so user can manipulate freely)
+        for (int i = 0; i < (int)m_Transforms.size(); i++) {
+            if (i != s_SelectedIndex) {
+                // Original animation logic
+                if (i == 0) m_Transforms[i].Rotation.y += deltaTime * 50.0f;
+                else m_Transforms[i].Rotation.y -= deltaTime * 30.0f;
+            }
+        }
 
         Groove::Renderer::DrawCube(m_Transforms[0], *m_Camera);
         Groove::Renderer::DrawCube(m_Transforms[1], *m_Camera);
 
         s_ImGuiLayer->Begin();
 
+        // Initialize ImGuizmo for this frame
+        ImGuizmo::BeginFrame();
+        ImGuizmo::SetOrthographic(false);
+        
+        // Set ImGuizmo to render on the background draw list (over the 3D scene)
+        ImGuizmo::SetDrawlist(ImGui::GetBackgroundDrawList());
+        
+        // Set the rect to cover the entire screen
+        ImGuiIO& io = ImGui::GetIO();
+        ImGuizmo::SetRect(0, 0, io.DisplaySize.x, io.DisplaySize.y);
+
+        // Draw gizmo if an object is selected
+        if (s_SelectedIndex >= 0 && s_SelectedIndex < (int)m_Transforms.size()) {
+            glm::mat4 view = m_Camera->GetViewMatrix();
+            glm::mat4 proj = m_Camera->GetProjectionMatrix();
+            glm::mat4 model = m_Transforms[s_SelectedIndex].GetMatrix();
+
+            // Draw and manipulate the gizmo
+            ImGuizmo::Manipulate(
+                glm::value_ptr(view),
+                glm::value_ptr(proj),
+                s_CurrentGizmoOperation,
+                s_CurrentGizmoMode,
+                glm::value_ptr(model)
+            );
+
+            // If gizmo was used, decompose the matrix back to position/rotation/scale
+            if (ImGuizmo::IsUsing()) {
+                glm::vec3 translation, rotation, scale;
+                ImGuizmo::DecomposeMatrixToComponents(
+                    glm::value_ptr(model),
+                    glm::value_ptr(translation),
+                    glm::value_ptr(rotation),
+                    glm::value_ptr(scale)
+                );
+                m_Transforms[s_SelectedIndex].Position = translation;
+                m_Transforms[s_SelectedIndex].Rotation = rotation;
+                m_Transforms[s_SelectedIndex].Scale = scale;
+            }
+        }
+
         ImGui::Begin("Groove Engine");
         ImGui::Text("Hello from ImGui!");
+        ImGui::Separator();
+        ImGui::Text("Selection: %s", s_SelectedIndex >= 0 ? ("Object #" + std::to_string(s_SelectedIndex)).c_str() : "None");
+        if (s_SelectedIndex >= 0) {
+            ImGui::Text("Gizmo Mode: %s", 
+                s_CurrentGizmoOperation == ImGuizmo::TRANSLATE ? "Translate (W)" :
+                s_CurrentGizmoOperation == ImGuizmo::ROTATE ? "Rotate (E)" : "Scale (R)");
+            ImGui::Text("Position: %.2f, %.2f, %.2f", 
+                m_Transforms[s_SelectedIndex].Position.x,
+                m_Transforms[s_SelectedIndex].Position.y,
+                m_Transforms[s_SelectedIndex].Position.z);
+            ImGui::Text("Rotation: %.2f, %.2f, %.2f", 
+                m_Transforms[s_SelectedIndex].Rotation.x,
+                m_Transforms[s_SelectedIndex].Rotation.y,
+                m_Transforms[s_SelectedIndex].Rotation.z);
+            ImGui::Text("Scale: %.2f, %.2f, %.2f", 
+                m_Transforms[s_SelectedIndex].Scale.x,
+                m_Transforms[s_SelectedIndex].Scale.y,
+                m_Transforms[s_SelectedIndex].Scale.z);
+        }
+        ImGui::Separator();
+        ImGui::Text("Controls:");
+        ImGui::Text("  Left Click: Select/Deselect");
+        ImGui::Text("  W/E/R: Translate/Rotate/Scale");
+        ImGui::Text("  Right Click + Mouse: Camera");
         ImGui::End();
 
         s_ImGuiLayer->End();
